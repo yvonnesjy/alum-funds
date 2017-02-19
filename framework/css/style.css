@@ -1,0 +1,144 @@
+html, body {
+    width: 100%;
+    height: 100%;
+    background-color: #E3E5E5;
+    max-width: 1200px;
+}
+
+.cover {
+    height: 100%;
+    width: 100%;
+    display: table;
+    background-image: url("../images/cover.jpg");
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.background {
+    display: inline-table;
+    width: 100%;
+    background: rgba(207, 207, 209, 0.78);
+    min-height: 20%;
+}
+
+.content {
+    background: rgba(255,255,255,0.3); 
+    vertical-align: middle;
+    display: table-cell;
+}
+
+.site-name {
+    font-size: 5vw;
+    color: #002454;
+    font-family: 'Pacifico', cursive;
+}
+
+.container {
+    height: 100%;
+    width: 100%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.story-display {
+    font-family: 'Shadows Into Light', cursive;
+    font-size: 2vw;
+    text-align: center;
+    display: table-cell;
+    vertical-align: middle;
+}
+
+#story {
+    width: 100%;
+    height: 20vw;
+}
+
+#custom-button, label, legend {
+    color: #897C7B;
+    font-family: 'Shadows Into Light', cursive;
+    font-size: 1.4vw;
+}
+
+.anonymous-checkbox {
+    display: inline-table;
+    width: 100%;
+}
+
+.anonymous {
+    display: table-cell;
+    vertical-align: middle;
+    width: 8%;
+}
+
+.anonymous-label {
+    display: table-cell;
+    vertical-align: middle;
+    width: 92%;
+}
+
+legend {
+    font-size: 2.5vw;
+}
+
+input {
+    /*width: 100%;*/
+    border: 0;
+    border-bottom: solid 2px #AEAEAF;
+    outline: none;
+    background: #E3E5E5;
+    color: #897C7B;
+}
+
+textarea {
+    width: 100%;
+    border: solid 2px #AEAEAF;
+    outline: none;
+    background: #E3E5E5;
+    color: #897C7B;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 8px;
+}
+
+.exp {
+    width: 10%;
+}
+
+#custom-button {
+    background: #BFC4C9;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 8px;
+}
+
+.row {
+    width: 100%;
+    height: 100%;
+    display: -webkit-flex;
+    display: flex;
+    justify-content: space-around;
+}
+
+#left-panel {
+    height: 100%;
+    overflow: auto;
+}
+
+#right-panel {
+    height: 100%;
+    overflow: auto;
+}
+/*
+* {
+    outline: 1px solid red !important;
+}*/
+
+* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    box-sizing: border-box;
+}
