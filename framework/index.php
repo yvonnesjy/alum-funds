@@ -12,6 +12,11 @@ if ($files != false) {
 }
 
 $app = new Silex\Application();
+
+$app->register(new Silex\Provider\MonologServiceProvider(), array(
+    'monolog.logfile' => 'php://stderr',
+));
+
 $dbopts = parse_url(getenv('DATABASE_URL'));
 $app->register(new Herrera\Pdo\PdoServiceProvider(),
     array(
@@ -22,9 +27,47 @@ $app->register(new Herrera\Pdo\PdoServiceProvider(),
        'pdo.password' => $dbopts["pass"]
     )
 );
+
+// $query = "select date, first, sister, last, story, id, anonymous
+//         from donations join sisters
+//         on donations.number = sisters.number
+//         order by id desc";
+
+$query = "select * from sisters";
+$app->get('/db/', function() use($app) {
+    $st = $app['pdo']->prepare($query);
+    $st->execute();
+
+    // $names = array();
+    while ($row = $st->fetch(PDO::FETCH_ASSOC)) {
+        $app['monolog']->addDebug('Row '.$row['first'].$row['sister'].$row['number']);
+    }
+});
+
+// $commentStyle = "";
+// while ($row = mysqli_fetch_array($result)) {
+//     $name = "Anonymous";
+//     if ($row['anonymous'] != 1) {
+//         $name = $row['first']." \"".$row['sister']."\" ".$row['last'];
+//     }
+
+//     $commentStyle = $commentStyle.".comment-".$row['id'].", ";
+//     echo "  <style type='text/css'>
+//                 .comment-".$row['id']." { background-image: url('../images/pic-".($row['id'] % $num_images).".jpg'); }
+//             </style>";
+//     echo "  <div class='comment-".$row['id']."'>
+//                 <div class='content'>
+//                     <div class='background'>";
+//     echo "              <div class='story-display'><p style='color: #897C7B;'>".$row['story']."</p><br><p style='color: #895753;'>-".$name." ".$row['date']."</p></div>";
+//     echo "          </div>
+//                 </div>
+//             </div>";
+// }
+// $commentStyle = substr($commentStyle, 0, strlen($commentStyle) - 2);
+
 ?>
 
-<!-- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -50,40 +93,6 @@ $app->register(new Herrera\Pdo\PdoServiceProvider(),
                     </div>
                 </div>
 
-<?php
-$query = "select date, first, sister, last, story, id, anonymous
-        from donations join sisters
-        on donations.number = sisters.number
-        order by id desc";
-// $app->get('/db/', function() use($app) {
-//     $st = $app['pdo']->prepare($query);
-//     $st->execute();
-
-//     $rows = array();
-//     return;
-// });
-
-$commentStyle = "";
-while ($row = mysqli_fetch_array($result)) {
-    $name = "Anonymous";
-    if ($row['anonymous'] != 1) {
-        $name = $row['first']." \"".$row['sister']."\" ".$row['last'];
-    }
-
-    $commentStyle = $commentStyle.".comment-".$row['id'].", ";
-    echo "  <style type='text/css'>
-                .comment-".$row['id']." { background-image: url('../images/pic-".($row['id'] % $num_images).".jpg'); }
-            </style>";
-    echo "  <div class='comment-".$row['id']."'>
-                <div class='content'>
-                    <div class='background'>";
-    echo "              <div class='story-display'><p style='color: #897C7B;'>".$row['story']."</p><br><p style='color: #895753;'>-".$name." ".$row['date']."</p></div>";
-    echo "          </div>
-                </div>
-            </div>";
-}
-$commentStyle = substr($commentStyle, 0, strlen($commentStyle) - 2);?>
-
             <style type='text/css'><?php echo $commentStyle; ?>
                 {
                     height: 100%;
@@ -97,7 +106,7 @@ $commentStyle = substr($commentStyle, 0, strlen($commentStyle) - 2);?>
             </style>
 
             </div>
-            <div id="right-panel" class="col-md-4">
+            <!-- <div id="right-panel" class="col-md-4">
                 <form id="form" name="form" action="insertIntoDB.php" onsubmit="return validateForm()" method="POST">
                     <span class="payment-errors"></span>
                     <legend>GIVE US MONEY</legend>
@@ -128,7 +137,6 @@ $commentStyle = substr($commentStyle, 0, strlen($commentStyle) - 2);?>
                                 }
                                 ?>
                             </select>
-                            <!-- <input type="text" id="name" name="name" max="35" required="true"> -->
                         </label>
                     </div>
 
@@ -195,7 +203,7 @@ $commentStyle = substr($commentStyle, 0, strlen($commentStyle) - 2);?>
 
                     <button type="submit" class="submit" id="custom-button">I'm ready to donate!</button>
                 </form>
-            </div>
+            </div> -->
         </div>
     </div>
 
@@ -257,4 +265,4 @@ $commentStyle = substr($commentStyle, 0, strlen($commentStyle) - 2);?>
         };
     </script>
 </body>
-</html> -->
+</html>
