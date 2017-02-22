@@ -11,10 +11,20 @@ if ($files != false) {
     $num_images = count($files);
 }
 
-$conn = mysqli_connect($server, $username, $password, $database) or die("Unable to connect");
+$app = new Silex\Application();
+$dbopts = parse_url(getenv('DATABASE_URL'));
+$app->register(new Herrera\Pdo\PdoServiceProvider(),
+    array(
+       'pdo.dsn' => 'pgsql:dbname='.ltrim($dbopts["path"],'/'),
+       'pdo.host' => $dbopts["host"],
+       'pdo.port' => $dbopts["port"],
+       'pdo.username' => $dbopts["user"],
+       'pdo.password' => $dbopts["pass"]
+    )
+);
 ?>
 
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -45,7 +55,13 @@ $query = "select date, first, sister, last, story, id, anonymous
         from donations join sisters
         on donations.number = sisters.number
         order by id desc";
-$result = mysqli_query($conn, $query) or die(mysqli_error($conn));
+// $app->get('/db/', function() use($app) {
+//     $st = $app['pdo']->prepare($query);
+//     $st->execute();
+
+//     $rows = array();
+//     return;
+// });
 
 $commentStyle = "";
 while ($row = mysqli_fetch_array($result)) {
@@ -241,4 +257,4 @@ $commentStyle = substr($commentStyle, 0, strlen($commentStyle) - 2);?>
         };
     </script>
 </body>
-</html>
+</html> -->
