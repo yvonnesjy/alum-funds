@@ -30,4 +30,6 @@ $app->get('/db/', function() use($app) {
         echo $row['first'].$row['sister'].$row['number'];
     }
 });
+
+$app->run();
 ?>
