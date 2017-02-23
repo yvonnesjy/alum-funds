@@ -27,6 +27,7 @@ $app->get('/db/', function() use($app) {
     $st->execute();
     
     while ($row = $st->fetch(PDO::FETCH_ASSOC)) {
+        $app['monolog']->addDebug('Row ' . $row['first'].$row['sister'].$row['number']);
         echo $row['first'].$row['sister'].$row['number'];
     }
 });
