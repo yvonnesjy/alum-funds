@@ -21,7 +21,7 @@ $app->register(new Herrera\Pdo\PdoServiceProvider(),
    )
 );
 
-$query = "select * from sisters"
+$query = "select * from sisters";
 $app->get('/db/', function() use($app) {
     $st = $app['pdo']->prepare($query);
     $st->execute();
