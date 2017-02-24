@@ -5,10 +5,7 @@ ini_set('display_errors', 1);
 require('../vendor/autoload.php');
 
 $app = new Silex\Application();
-
-$app->register(new Silex\Provider\MonologServiceProvider(), array(
-    'monolog.logfile' => 'php://stderr',
-));
+$app['debug'] = true;
 
 $dbopts = parse_url(getenv('DATABASE_URL'));
 $app->register(new Herrera\Pdo\PdoServiceProvider(),
@@ -20,6 +17,19 @@ $app->register(new Herrera\Pdo\PdoServiceProvider(),
        'pdo.password' => $dbopts["pass"]
    )
 );
+
+$app->register(new Silex\Provider\MonologServiceProvider(), array(
+    'monolog.logfile' => 'php://stderr',
+));
+
+$app->register(new Silex\Provider\TwigServiceProvider(), array(
+    'twig.path' => __DIR__.'/views',
+));
+
+$app->get('/', function() use($app) {
+  $app['monolog']->addDebug('logging output.');
+  return $app['twig']->render('index.twig');
+});
 
 $query = "select * from sisters";
 $app->get('/db/', function() use($app) {
