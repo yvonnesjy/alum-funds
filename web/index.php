@@ -22,16 +22,16 @@ $app->register(new Silex\Provider\MonologServiceProvider(), array(
   'monolog.logfile' => 'php://stderr',
 ));
 
-// // Register view rendering
-$app->register(new Silex\Provider\TwigServiceProvider(), array(
-    'twig.path' => __DIR__.'/views',
-));
+// // // Register view rendering
+// $app->register(new Silex\Provider\TwigServiceProvider(), array(
+//     'twig.path' => __DIR__.'/views',
+// ));
 
-// // Our web handlers
-$app->get('/', function() use($app) {
-  $app['monolog']->addDebug('logging output.');
-  return $app['twig']->render('index.twig');
-});
+// // // Our web handlers
+// $app->get('/', function() use($app) {
+//   $app['monolog']->addDebug('logging output.');
+//   return $app['twig']->render('index.twig');
+// });
 
 $query = "select * from sisters";
 $app->get('/db/', function() use($app) {
@@ -44,9 +44,9 @@ $app->get('/db/', function() use($app) {
         $names[] = $row;
     }
 
-  return $app['twig']->render('database.twig', array(
-    'names' => $names
-  ));
+  // return $app['twig']->render('database.twig', array(
+  //   'names' => $names
+  // ));
 });
 
 $app->run();
