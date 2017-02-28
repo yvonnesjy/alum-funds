@@ -1,9 +1,4 @@
 <?php
-$server = "localhost";
-$username = "root";
-$password = "root";
-$database = "alum_donations";
-
 function redirect($url)
 {
     if (strlen(session_id()) > 0) // if using sessions
