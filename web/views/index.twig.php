@@ -1,70 +1,3 @@
-<?php
-include 'utils.php';
-
-require('../vendor/autoload.php');
-
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
-$files = glob("images/pic-"."*.jpg");
-if ($files != false) {
-    $num_images = count($files);
-}
-
-$app = new Silex\Application();
-
-$app->register(new Silex\Provider\MonologServiceProvider(), array(
-    'monolog.logfile' => 'php://stderr',
-));
-
-$dbopts = parse_url(getenv('DATABASE_URL'));
-$app->register(new Herrera\Pdo\PdoServiceProvider(),
-    array(
-       'pdo.dsn' => 'pgsql:dbname='.ltrim($dbopts["path"],'/'),
-       'pdo.host' => $dbopts["host"],
-       'pdo.port' => $dbopts["port"],
-       'pdo.username' => $dbopts["user"],
-       'pdo.password' => $dbopts["pass"]
-    )
-);
-
-$query = "select date, first, sister, last, story, id, anonymous
-        from donations join sisters
-        on donations.number = sisters.number
-        order by id desc";
-$app->get('/db/', function() use($app) {
-    $st = $app['pdo']->prepare($query);
-    $st->execute();
-
-    // $names = array();
-    while ($row = $st->fetch(PDO::FETCH_ASSOC)) {
-        $app['monolog']->addDebug('Row '.$row['first'].$row['sister'].$row['number']);
-    }
-});
-
-$commentStyle = "";
-while ($row = mysqli_fetch_array($result)) {
-    $name = "Anonymous";
-    if ($row['anonymous'] != 1) {
-        $name = $row['first']." \"".$row['sister']."\" ".$row['last'];
-    }
-
-    $commentStyle = $commentStyle.".comment-".$row['id'].", ";
-    echo "  <style type='text/css'>
-                .comment-".$row['id']." { background-image: url('../images/pic-".($row['id'] % $num_images).".jpg'); }
-            </style>";
-    echo "  <div class='comment-".$row['id']."'>
-                <div class='content'>
-                    <div class='background'>";
-    echo "              <div class='story-display'><p style='color: #897C7B;'>".$row['story']."</p><br><p style='color: #895753;'>-".$name." ".$row['date']."</p></div>";
-    echo "          </div>
-                </div>
-            </div>";
-}
-$commentStyle = substr($commentStyle, 0, strlen($commentStyle) - 2);
-
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -72,8 +5,8 @@ $commentStyle = substr($commentStyle, 0, strlen($commentStyle) - 2);
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scal=1">
     <title>Thanks, DPhiL</title>
-    <link rel="stylesheet" type="text/css" href="css/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="../css/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../css/style.css">
     <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Shadows+Into+Light" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Reenie+Beanie" rel="stylesheet">
@@ -91,7 +24,27 @@ $commentStyle = substr($commentStyle, 0, strlen($commentStyle) - 2);
                     </div>
                 </div>
 
-            <style type='text/css'><?php echo $commentStyle; ?>
+            {% set commentStyle = "" %}
+            {% for story in stories %}
+                {% if story.anonymous != 1 %}
+                    {% set name = story.first ~ " \"" ~ sister.sister ~ "\" " ~ sister.last%}
+                {% else %}
+                    {% set name = "" %}
+                {% endif %}
+                {% set commentStyle = commentStyle ~ ".comment-" ~ story.id ~ ", " %}
+                <style type='text/css'>
+                    .comment-{{story.id}} { background-image: url('../images/pic-{{story.id % num_images}}.jpg'); }
+                </style>";
+                <div class='comment-{{story.id}}'>
+                    <div class='content'>
+                        <div class='background'>";
+                            <div class='story-display'><p style='color: #897C7B;'>{{story.story}}</p><br><p style='color: #895753;'>-{{name}} {{story.date}}</p></div>";
+                            </div>
+                        </div>
+                </div>
+            {% endfor %}
+
+            <style type='text/css'>{{commentStyle[:commentStyle|length - 2]}}
                 {
                     height: 100%;
                     width: 100%;
@@ -114,26 +67,15 @@ $commentStyle = substr($commentStyle, 0, strlen($commentStyle) - 2);
                             <select id="name" name="name" required="true">
                                 <option value="default" disabled>--</option>
                                 <option disabled>- Charter -</option>
-                                <?php
-                                $query = "select sisters.class, first, sister, last, number
-                                        from classes join sisters
-                                        on classes.name = sisters.class";
-                                $result = mysqli_query($conn, $query) or die(mysqli_error($conn));
-                                $class = "Charter";
-                                while ($row = mysqli_fetch_array($result)) {
-                                    if ($class != $row['class']) {
-                                        $class = $row['class'];
-                                        echo "<option disabled> </option>";
-                                        echo "<option disabled>- ".$class." -</option>";
-                                    }
-                                    $number = $row['number'];
-                                    if ($number < 10) {
-                                        $number = "0".$number;
-                                    }
-                                    $name = "#".$number." ".$row['first']." \"".$row['sister']."\" ".$row['last'];
-                                    echo "<option value='".$number."'>".$name."</option>";
-                                }
-                                ?>
+                                {% set class = "Charter" %}
+                                {% for sister in sisters %}
+                                    {% if sister.class =!= class %}
+                                        {% set class = sister.class %}
+                                        <option disabled> </option>
+                                        <option disabled>- {{sister.class}} -</option>
+                                    {% endif %}
+                                {% endfor %}
+                                    <option value='{{sister.number|format("%02d")}}'>#{{sister.number|format("%02d")}} {{sister.first}} "{{sister.sister}}" {{sister.last}}</option>
                             </select>
                         </label>
                     </div>

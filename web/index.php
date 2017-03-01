@@ -4,6 +4,13 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 require('../vendor/autoload.php');
+// $route = new Symfony\Component\Routing\Route('/', array());
+// $routes = new Symfony\Component\Routing\RouteCollection();
+// $routes->add('route_name', $route);
+// $env = new Twig\Twig_Environment();
+
+// $env->clearCacheFiles();
+
 $app = new Silex\Application();
 $app['debug'] = true;
 $dbopts = parse_url(getenv('DATABASE_URL'));
@@ -33,20 +40,51 @@ $app->get('/', function() use($app) {
   return $app['twig']->render('index.twig');
 });
 
-$query = "select * from sisters";
+$query = "select date, first, sister, last, story, id, anonymous
+        from donations join sisters
+        on donations.number = sisters.number
+        order by id desc";
 $app->get('/db/', function() use($app) {
     $st = $app['pdo']->prepare($query);
     $st->execute();
     
-    $names = array();
+    $stories = array();
     while ($row = $st->fetch(PDO::FETCH_ASSOC)) {
-        $app['monolog']->addDebug('Row ' . $row['first'].$row['sister'].$row['number']);
-        $names[] = $row;
+        // $app['monolog']->addDebug('Row ' . $row['first'].$row['sister'].$row['number']);
+        $stories[] = $row;
     }
 
-  // return $app['twig']->render('database.twig', array(
-  //   'names' => $names
-  // ));
+  return $app['twig']->render('index.twig', array(
+    'stories' => $stories
+  ));
+});
+
+$query = "select sisters.class, first, sister, last, number
+          from classes join sisters
+          on classes.name = sisters.class";
+$app->get('/db/', function() use($app) {
+    $st = $app['pdo']->prepare($query);
+    $st->execute();
+    
+    $sisters = array();
+    while ($row = $st->fetch(PDO::FETCH_ASSOC)) {
+        // $app['monolog']->addDebug('Row ' . $row['first'].$row['sister'].$row['number']);
+        $sisters[] = $row;
+    }
+
+  return $app['twig']->render('index.twig', array(
+    'sisters' => $sisters
+  ));
+});
+
+$files = glob("images/pic-"."*.jpg");
+if ($files != false) {
+    $num_images = count($files);
+}
+$app->get('/', function() use($app) {
+  return $app['twig']->render('index.twig', array(
+    'num_images' => $num_images
+  ));
 });
 
 $app->run();
