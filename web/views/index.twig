@@ -69,13 +69,13 @@
                                 <option disabled>- Charter -</option>
                                 {% set class = "Charter" %}
                                 {% for sister in sisters %}
-                                    {% if sister.class =!= class %}
+                                    {% if sister.class != class %}
                                         {% set class = sister.class %}
                                         <option disabled> </option>
                                         <option disabled>- {{sister.class}} -</option>
                                     {% endif %}
-                                {% endfor %}
                                     <option value='{{sister.number|format("%02d")}}'>#{{sister.number|format("%02d")}} {{sister.first}} "{{sister.sister}}" {{sister.last}}</option>
+                                {% endfor %}
                             </select>
                         </label>
                     </div>
