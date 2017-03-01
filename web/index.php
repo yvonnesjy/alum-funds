@@ -4,15 +4,10 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 require('../vendor/autoload.php');
-// $route = new Symfony\Component\Routing\Route('/', array());
-// $routes = new Symfony\Component\Routing\RouteCollection();
-// $routes->add('route_name', $route);
-// $env = new Twig\Twig_Environment();
-
-// $env->clearCacheFiles();
 
 $app = new Silex\Application();
 $app['debug'] = true;
+
 $dbopts = parse_url(getenv('DATABASE_URL'));
 $app->register(new Herrera\Pdo\PdoServiceProvider(),
   array(
@@ -35,6 +30,7 @@ $app->register(new Silex\Provider\TwigServiceProvider(), array(
 ));
 
 // Our web handlers
+
 $app->get('/', function() use($app) {
   $app['monolog']->addDebug('logging output.');
   return $app['twig']->render('index.twig');
@@ -50,7 +46,7 @@ $app->get('/db/', function() use($app) {
     
     $stories = array();
     while ($row = $st->fetch(PDO::FETCH_ASSOC)) {
-        // $app['monolog']->addDebug('Row ' . $row['first'].$row['sister'].$row['number']);
+        $app['monolog']->addDebug('Row ' . $row['story'].$row['id']);
         $stories[] = $row;
     }
 
@@ -68,7 +64,7 @@ $app->get('/db/', function() use($app) {
     
     $sisters = array();
     while ($row = $st->fetch(PDO::FETCH_ASSOC)) {
-        // $app['monolog']->addDebug('Row ' . $row['first'].$row['sister'].$row['number']);
+        $app['monolog']->addDebug('Row ' . $row['first'].$row['number']);
         $sisters[] = $row;
     }
 

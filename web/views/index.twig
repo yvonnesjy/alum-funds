@@ -33,9 +33,9 @@
                 {% endif %}
                 {% set commentStyle = commentStyle ~ ".comment-" ~ story.id ~ ", " %}
                 <style type='text/css'>
-                    .comment-{{story.id}} { background-image: url('../images/pic-{{story.id % num_images}}.jpg'); }
+                    .comment-{{story.id}} { background-image: url({{'\'../images/pic-'~story.id % num_images~'.jpg\''}}); }
                 </style>";
-                <div class='comment-{{story.id}}'>
+                <div class={{'\'comment-'~story.id~'\''}}>
                     <div class='content'>
                         <div class='background'>";
                             <div class='story-display'><p style='color: #897C7B;'>{{story.story}}</p><br><p style='color: #895753;'>-{{name}} {{story.date}}</p></div>";
@@ -74,7 +74,7 @@
                                         <option disabled> </option>
                                         <option disabled>- {{sister.class}} -</option>
                                     {% endif %}
-                                    <option value='{{sister.number|format("%02d")}}'>#{{sister.number|format("%02d")}} {{sister.first}} "{{sister.sister}}" {{sister.last}}</option>
+                                    <option value={{'\''~sister.number|format("%02d")~'\''}}>#{{sister.number|format("%02d")}} {{sister.first}} "{{sister.sister}}" {{sister.last}}</option>
                                 {% endfor %}
                             </select>
                         </label>
