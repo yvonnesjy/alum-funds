@@ -25,8 +25,6 @@ $app->register(new Silex\Provider\MonologServiceProvider(), array(
   'monolog.logfile' => 'php://stderr',
 ));
 
-$app['monolog']->addDebug($path. " ". $host. " ". $port. " ". $user. " ". $pass);
-
 // Register view rendering
 $app->register(new Silex\Provider\TwigServiceProvider(), array(
     'twig.path' => __DIR__.'/views',
@@ -47,7 +45,7 @@ $result = pg_query($pg_conn, $query);
 $stories = array();
 if (pg_num_rows($result)) {
   while ($row = pg_fetch_row($result)) {
-    $app['monolog']->addDebug('Row ' . $row[0].$row['id']);
+    // $app['monolog']->addDebug('Row ' . $row[0].$row[5]);
     $stories[] = array('date' => $row[0],
                       'first' => $row[1], 
                       'sister' => $row[2],
@@ -79,7 +77,7 @@ $result = pg_query($pg_conn, $query);
 $sisters = array();
 if (pg_num_rows($result)) {
   while ($row = pg_fetch_row($result)) {
-    $app['monolog']->addDebug('Row ' . $row[0].$row['number']);
+    // $app['monolog']->addDebug('Row ' . $row[0].' '.$row[1]);
     $stories[] = array('class' => $row[0],
                       'first' => $row[1], 
                       'sister' => $row[2],

@@ -27,7 +27,7 @@
             {% set commentStyle = "" %}
             {% for story in stories %}
                 {% if story.anonymous != 1 %}
-                    {% set name = story.first ~ " \"" ~ sister.sister ~ "\" " ~ sister.last%}
+                    {% set name = story.first ~ " \"" ~ story.sister ~ "\" " ~ story.last%}
                 {% else %}
                     {% set name = "" %}
                 {% endif %}
