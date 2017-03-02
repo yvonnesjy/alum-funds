@@ -45,7 +45,7 @@ $query = "select date, first, sister, last, story, id, anonymous
         order by id desc";
 $result = pg_query($pg_conn, $query);
 $stories = array();
-if (pg_num_rows($pg_conn, $result)) {
+if (pg_num_rows($result)) {
   while ($row = pg_fetch_row($result)) {
     $app['monolog']->addDebug('Row ' . $row[0].$row['id']);
     $stories[] = array('date' => $row[0],
@@ -77,7 +77,7 @@ $query = "select sisters.class, first, sister, last, number
           on classes.name = sisters.class";
 $result = pg_query($pg_conn, $query);
 $sisters = array();
-if (pg_num_rows($pg_conn, $result)) {
+if (pg_num_rows($result)) {
   while ($row = pg_fetch_row($result)) {
     $app['monolog']->addDebug('Row ' . $row[0].$row['number']);
     $stories[] = array('class' => $row[0],
