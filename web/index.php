@@ -8,21 +8,24 @@ require('../vendor/autoload.php');
 $app = new Silex\Application();
 $app['debug'] = true;
 
-$dbopts = parse_url(getenv('DATABASE_URL'));
-$app->register(new Herrera\Pdo\PdoServiceProvider(),
-  array(
-    'pdo.dsn' => 'pgsql:dbname='.ltrim($dbopts["path"],'/'),
-    'pdo.host' => $dbopts["host"],
-    'pdo.port' => $dbopts["port"],
-    'pdo.username' => $dbopts["user"],
-    'pdo.password' => $dbopts["pass"]
-  )
-);
+extract(parse_url(getenv('DATABASE_URL')));
+$pg_conn = pg_connect("user=$user password=$pass host=$host port=$port dbname=".ltrim($path, '/'));
+// $app->register(new Herrera\Pdo\PdoServiceProvider(),
+//   array(
+//     'pdo.dsn' => 'pgsql:dbname='.ltrim($dbopts["path"],'/'),
+//     'pdo.host' => $dbopts["host"],
+//     'pdo.port' => $dbopts["port"],
+//     'pdo.username' => $dbopts["user"],
+//     'pdo.password' => $dbopts["pass"]
+//   )
+// );
 
 // Register the monolog logging service
 $app->register(new Silex\Provider\MonologServiceProvider(), array(
   'monolog.logfile' => 'php://stderr',
 ));
+
+$app['monolog']->addDebug($dbopts["path"]. " ". $dbopts["host"]. " ". $dbopts["port"]. " ". $dbopts["user"]. " ". $dbopts["pass"]);
 
 // Register view rendering
 $app->register(new Silex\Provider\TwigServiceProvider(), array(
@@ -40,15 +43,29 @@ $query = "select date, first, sister, last, story, id, anonymous
         from donations join sisters
         on donations.number = sisters.number
         order by id desc";
+$result = pg_query($pg_conn, $query);
+$stories = array();
+if (pg_num_rows($result)) {
+  while ($row = pg_fetch_row($result)) {
+    $app['monolog']->addDebug('Row ' . $row[0].$row['id']);
+    $stories[] = array('date' => $row[0],
+                      'first' => $row[1], 
+                      'sister' => $row[2],
+                      'last' => $row[3],
+                      'story' => $row[4],
+                      'id' => $row[5],
+                      'anonymous' => $row[6]);
+  }
+}
 $app->get('/db/', function() use($app) {
-    $st = $app['pdo']->prepare($query);
-    $st->execute();
-    
-    $stories = array();
-    while ($row = $st->fetch(PDO::FETCH_ASSOC)) {
-        $app['monolog']->addDebug('Row ' . $row['story'].$row['id']);
-        $stories[] = $row;
-    }
+    // $st = $app['pdo']->prepare($query);
+    // $st->execute();
+
+    // $stories = array();
+    // while ($row = $st->fetch(PDO::FETCH_ASSOC)) {
+    //     $app['monolog']->addDebug('Row ' . $row['story'].$row['id']);
+    //     $stories[] = $row;
+    // }
 
   return $app['twig']->render('index.twig', array(
     'stories' => $stories
@@ -58,15 +75,27 @@ $app->get('/db/', function() use($app) {
 $query = "select sisters.class, first, sister, last, number
           from classes join sisters
           on classes.name = sisters.class";
+$result = pg_query($pg_conn, $query);
+$sisters = array();
+if (pg_num_rows($result)) {
+  while ($row = pg_fetch_row($result)) {
+    $app['monolog']->addDebug('Row ' . $row[0].$row['number']);
+    $stories[] = array('class' => $row[0],
+                      'first' => $row[1], 
+                      'sister' => $row[2],
+                      'last' => $row[3],
+                      'number' => $row[4]);
+  }
+}
 $app->get('/db/', function() use($app) {
-    $st = $app['pdo']->prepare($query);
-    $st->execute();
+    // $st = $app['pdo']->prepare($query);
+    // $st->execute();
     
-    $sisters = array();
-    while ($row = $st->fetch(PDO::FETCH_ASSOC)) {
-        $app['monolog']->addDebug('Row ' . $row['first'].$row['number']);
-        $sisters[] = $row;
-    }
+    // $sisters = array();
+    // while ($row = $st->fetch(PDO::FETCH_ASSOC)) {
+    //     $app['monolog']->addDebug('Row ' . $row['first'].$row['number']);
+    //     $sisters[] = $row;
+    // }
 
   return $app['twig']->render('index.twig', array(
     'sisters' => $sisters

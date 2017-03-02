@@ -1,4 +1,4 @@
 vendor/
 .env
 
-framework/test.php
+web/test.php
