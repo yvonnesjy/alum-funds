@@ -55,7 +55,7 @@ if (pg_num_rows($result)) {
                       'anonymous' => $row[6]);
   }
 }
-$app->get('/db/', function() use($app) {
+$app->get('/', function() use($app) {
     // $st = $app['pdo']->prepare($query);
     // $st->execute();
 
@@ -85,7 +85,7 @@ if (pg_num_rows($result)) {
                       'number' => $row[4]);
   }
 }
-$app->get('/db/', function() use($app) {
+$app->get('/', function() use($app) {
     // $st = $app['pdo']->prepare($query);
     // $st->execute();
     

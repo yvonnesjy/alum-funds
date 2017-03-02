@@ -25,7 +25,7 @@
                 </div>
 
             {% set commentStyle = "" %}
-            {# {% for story in stories %}
+            {% for story in stories %}
                 {% if story.anonymous != 1 %}
                     {% set name = story.first ~ " \"" ~ story.sister ~ "\" " ~ story.last%}
                 {% else %}
@@ -42,7 +42,7 @@
                             </div>
                         </div>
                 </div>
-            {% endfor %} #}
+            {% endfor %}
 
             <style type='text/css'>{{commentStyle[:commentStyle|length - 2]}}
                 {
