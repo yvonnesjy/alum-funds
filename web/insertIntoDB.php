@@ -8,8 +8,9 @@ require_once('stripe/init.php');
 $curl = new \Stripe\HttpClient\CurlClient(array(CURLOPT_SSLVERSION => CURL_SSLVERSION_TLSv1));
 \Stripe\ApiRequestor::setHttpClient($curl);
 
-extract(parse_url(getenv('DATABASE_URL')));
-$pg_conn = pg_connect("user=$user password=$pass host=$host port=$port dbname=".ltrim($path, '/'));
+echo $_POST['amount'];
+echo $_POST['name'];
+echo $_POST['stripeToken'];
 
 if (isset($_POST['amount'])) {
 
@@ -27,6 +28,9 @@ if (isset($_POST['amount'])) {
         "source" => $token,
         "description" => "Example charge"
         ));
+
+        extract(parse_url(getenv('DATABASE_URL')));
+        $pg_conn = pg_connect("user=$user password=$pass host=$host port=$port dbname=".ltrim($path, '/'));
 
         $query = "select * from donations";
         $result = pg_query($pg_conn, $query);
