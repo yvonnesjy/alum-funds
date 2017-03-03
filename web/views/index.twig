@@ -23,10 +23,9 @@
                         </div>
                     </div>
                 </div>
-
             {% set commentStyle = "" %}
-            {% if stories is defined %}
-                {% for story in stories %}
+            {% if app.stories is defined %}
+                {% for story in app.stories %}
                     {% if story.anonymous != 1 %}
                         {% set name = story.first ~ " \"" ~ story.sister ~ "\" " ~ story.last%}
                     {% else %}
@@ -34,7 +33,7 @@
                     {% endif %}
                     {% set commentStyle = commentStyle ~ ".comment-" ~ story.id ~ ", " %}
                     <style type='text/css'>
-                        .comment-{{story.id}} { background-image: url({{'\'../images/pic-'~story.id % num_images~'.jpg\''}}); }
+                        .comment-{{story.id}} { background-image: url({{'\'../images/pic-'~ story.id % app.num_images ~'.jpg\''}}); }
                     </style>";
                     <div class={{'\'comment-'~story.id~'\''}}>
                         <div class='content'>
@@ -70,8 +69,8 @@
                                 <option value="default" disabled>--</option>
                                 <option disabled>- Charter -</option>
                                 {% set class = "Charter" %}
-                                {% if sisters is defined %}
-                                    {% for sister in sisters %}
+                                {% if app.sisters is defined %}
+                                    {% for sister in app.sisters %}
                                         {% if sister.class != class %}
                                             {% set class = sister.class %}
                                             <option disabled> </option>

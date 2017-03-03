@@ -76,6 +76,11 @@ $files = glob("images/pic-"."*.jpg");
 if ($files != false) {
     $num_images = count($files);
 }
+
+$app['stories'] = $stories;
+$app['sisters'] = $sisters;
+$app['num_images'] = $num_images;
+
 $app->get('/', function() use($app) {
     // $st = $app['pdo']->prepare($query);
     // $st->execute();
