@@ -55,20 +55,6 @@ if (pg_num_rows($result)) {
                       'anonymous' => $row[6]);
   }
 }
-$app->get('/', function() use($app) {
-    // $st = $app['pdo']->prepare($query);
-    // $st->execute();
-
-    // $stories = array();
-    // while ($row = $st->fetch(PDO::FETCH_ASSOC)) {
-    //     $app['monolog']->addDebug('Row ' . $row['story'].$row['id']);
-    //     $stories[] = $row;
-    // }
-
-  return $app['twig']->render('index.twig', array(
-    'stories' => $stories
-  ));
-});
 
 $query = "select sisters.class, first, sister, last, number
           from classes join sisters
@@ -85,30 +71,48 @@ if (pg_num_rows($result)) {
                       'number' => $row[4]);
   }
 }
-$app->get('/', function() use($app) {
-    // $st = $app['pdo']->prepare($query);
-    // $st->execute();
-    
-    // $sisters = array();
-    // while ($row = $st->fetch(PDO::FETCH_ASSOC)) {
-    //     $app['monolog']->addDebug('Row ' . $row['first'].$row['number']);
-    //     $sisters[] = $row;
-    // }
-
-  return $app['twig']->render('index.twig', array(
-    'sisters' => $sisters
-  ));
-});
 
 $files = glob("images/pic-"."*.jpg");
 if ($files != false) {
     $num_images = count($files);
 }
 $app->get('/', function() use($app) {
+    // $st = $app['pdo']->prepare($query);
+    // $st->execute();
+
+    // $stories = array();
+    // while ($row = $st->fetch(PDO::FETCH_ASSOC)) {
+    //     $app['monolog']->addDebug('Row ' . $row['story'].$row['id']);
+    //     $stories[] = $row;
+    // }
+
   return $app['twig']->render('index.twig', array(
+    'stories' => $stories,
+    'sisters' => $sisters,
     'num_images' => $num_images
   ));
 });
+
+// $app->get('/', function() use($app) {
+//     // $st = $app['pdo']->prepare($query);
+//     // $st->execute();
+    
+//     // $sisters = array();
+//     // while ($row = $st->fetch(PDO::FETCH_ASSOC)) {
+//     //     $app['monolog']->addDebug('Row ' . $row['first'].$row['number']);
+//     //     $sisters[] = $row;
+//     // }
+
+//   return $app['twig']->render('index.twig', array(
+//     'sisters' => $sisters
+//   ));
+// });
+
+// $app->get('/', function() use($app) {
+//   return $app['twig']->render('index.twig', array(
+//     'num_images' => $num_images
+//   ));
+// });
 
 $app->run();
 ?>
