@@ -8,19 +8,10 @@ require_once('stripe/init.php');
 $curl = new \Stripe\HttpClient\CurlClient(array(CURLOPT_SSLVERSION => CURL_SSLVERSION_TLSv1));
 \Stripe\ApiRequestor::setHttpClient($curl);
 
-$conn = mysqli_connect($server, $username, $password, $database) or die("Unable to connect");
+extract(parse_url(getenv('DATABASE_URL')));
+$pg_conn = pg_connect("user=$user password=$pass host=$host port=$port dbname=".ltrim($path, '/'));
 
-if (isset($_POST['name'])) {
-    $query = "select * from donations";
-    $result = mysqli_query($conn, $query) or die(mysqli_error($conn));
-
-    $id = mysqli_num_rows($result);
-    $anonymous = 0;
-    if (isset($_POST['anonymous'])) {
-        $anonymous = 1;
-    }
-    $query = "insert into donations values ('".date("Y-m-d")."', ".$_POST['amount'].", '".$_POST['name']."', '".$_POST['story']."', ".$id.", '".$_POST['purpose']."', ".$anonymous.")";
-    mysqli_query($conn, $query) or die(mysqli_error($conn));
+if (isset($_POST['amount'])) {
 
     \Stripe\Stripe::setApiKey("sk_test_YRQsjn2dGpluxMPWQKBlKxPR");
 
@@ -30,16 +21,26 @@ if (isset($_POST['name'])) {
 
     // Create a charge: this will charge the user's card
     try {
-      $charge = \Stripe\Charge::create(array(
+        $charge = \Stripe\Charge::create(array(
         "amount" => $amount, // Amount in cents
         "currency" => "usd",
         "source" => $token,
         "description" => "Example charge"
         ));
+
+        $query = "select * from donations";
+        $result = pg_query($pg_conn, $query);
+
+        $id = pg_num_rows($result);
+        $anonymous = 0;
+        if (isset($_POST['anonymous'])) {
+            $anonymous = 1;
+        }
+        $query = "insert into donations values ('".date("Y-m-d")."', ".$_POST['amount'].", '".$_POST['name']."', '".$_POST['story']."', ".$id.", '".$_POST['purpose']."', ".$anonymous.")";
+        pg_query($conn, $query);
     } catch(\Stripe\Error\Card $e) {
       // The card has been declined
     }
-    redirect("index.php");
-    // echo "<script>var amount = ".$_POST['amount']."</script>";
+    redirect("views/index.twig");
 }
 ?>

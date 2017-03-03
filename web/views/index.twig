@@ -23,7 +23,7 @@
                         </div>
                     </div>
                 </div>
-            
+
             {% set commentStyle = "" %}
             {% if app.stories is defined %}
                 {% for story in app.stories %}
@@ -60,7 +60,7 @@
 
             </div>
             <div id="right-panel" class="col-md-4">
-                <form id="form" name="form" action="insertIntoDB.php" onsubmit="return validateForm()" method="POST">
+                <form id="form" name="form" action="../insertIntoDB.php" onsubmit="return validateForm()" method="POST">
                     <span class="payment-errors"></span>
                     <legend>GIVE US MONEY</legend>
                     <div class="form-row">
