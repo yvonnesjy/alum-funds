@@ -10,15 +10,6 @@ $app['debug'] = true;
 
 extract(parse_url(getenv('DATABASE_URL')));
 $pg_conn = pg_connect("user=$user password=$pass host=$host port=$port dbname=".ltrim($path, '/'));
-// $app->register(new Herrera\Pdo\PdoServiceProvider(),
-//   array(
-//     'pdo.dsn' => 'pgsql:dbname='.ltrim($dbopts["path"],'/'),
-//     'pdo.host' => $dbopts["host"],
-//     'pdo.port' => $dbopts["port"],
-//     'pdo.username' => $dbopts["user"],
-//     'pdo.password' => $dbopts["pass"]
-//   )
-// );
 
 // Register the monolog logging service
 $app->register(new Silex\Provider\MonologServiceProvider(), array(
@@ -80,44 +71,6 @@ if ($files != false) {
 $app['stories'] = $stories;
 $app['sisters'] = $sisters;
 $app['num_images'] = $num_images;
-
-$app->get('/', function() use($app) {
-    // $st = $app['pdo']->prepare($query);
-    // $st->execute();
-
-    // $stories = array();
-    // while ($row = $st->fetch(PDO::FETCH_ASSOC)) {
-    //     $app['monolog']->addDebug('Row ' . $row['story'].$row['id']);
-    //     $stories[] = $row;
-    // }
-
-  return $app['twig']->render('index.twig', array(
-    'stories' => $stories,
-    'sisters' => $sisters,
-    'num_images' => $num_images
-  ));
-});
-
-// $app->get('/', function() use($app) {
-//     // $st = $app['pdo']->prepare($query);
-//     // $st->execute();
-    
-//     // $sisters = array();
-//     // while ($row = $st->fetch(PDO::FETCH_ASSOC)) {
-//     //     $app['monolog']->addDebug('Row ' . $row['first'].$row['number']);
-//     //     $sisters[] = $row;
-//     // }
-
-//   return $app['twig']->render('index.twig', array(
-//     'sisters' => $sisters
-//   ));
-// });
-
-// $app->get('/', function() use($app) {
-//   return $app['twig']->render('index.twig', array(
-//     'num_images' => $num_images
-//   ));
-// });
 
 $app->run();
 ?>
