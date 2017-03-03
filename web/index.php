@@ -64,7 +64,7 @@ $sisters = array();
 if (pg_num_rows($result)) {
   while ($row = pg_fetch_row($result)) {
     // $app['monolog']->addDebug('Row ' . $row[0].' '.$row[1]);
-    $stories[] = array('class' => $row[0],
+    $sisters[] = array('class' => $row[0],
                       'first' => $row[1], 
                       'sister' => $row[2],
                       'last' => $row[3],
