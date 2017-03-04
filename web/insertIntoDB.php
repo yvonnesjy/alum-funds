@@ -8,17 +8,14 @@ require_once('stripe/init.php');
 $curl = new \Stripe\HttpClient\CurlClient(array(CURLOPT_SSLVERSION => CURL_SSLVERSION_TLSv1));
 \Stripe\ApiRequestor::setHttpClient($curl);
 
-echo $_POST['amount'];
-echo $_POST['name'];
-echo $_POST['stripeToken'];
-
-if (isset($_POST['amount'])) {
+if (isset($_POST)) {
 
     \Stripe\Stripe::setApiKey("sk_test_YRQsjn2dGpluxMPWQKBlKxPR");
 
     // Get the credit card details submitted by the form
     $token = $_POST['stripeToken'];
     $amount = $_POST['amount'] * 100;
+    $description = "Donation made by ".$_POST['name'];
 
     // Create a charge: this will charge the user's card
     try {
@@ -26,7 +23,7 @@ if (isset($_POST['amount'])) {
         "amount" => $amount, // Amount in cents
         "currency" => "usd",
         "source" => $token,
-        "description" => "Example charge"
+        "description" => $description
         ));
 
         extract(parse_url(getenv('DATABASE_URL')));
