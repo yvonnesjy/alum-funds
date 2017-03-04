@@ -63,6 +63,11 @@ if (pg_num_rows($result)) {
   }
 }
 
+$query = "insert into donations 
+          values ('95-05-25', 43, '2', 'asfdjkl', 0, 'asdflkj', 1)";
+$result = pg_query($pg_conn, $query);
+$app['monolog']->addDebug($result);
+
 $files = glob("images/pic-"."*.jpg");
 if ($files != false) {
     $num_images = count($files);
