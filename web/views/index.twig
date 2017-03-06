@@ -36,10 +36,10 @@
                     <script>
                         .comment-{{story.id}}.style.backgroundImage = 'url({{ '../images/pic-' ~ story.id % app.num_images ~ '.jpg' }})'
                     </script>
-                    <div class={{'\'comment-'~story.id~'\''}}>
+                    <div class={{'comment-'~story.id}}>
                         <div class='content'>
-                            <div class='background'>";
-                                <div class='story-display'><p style='color: #897C7B;'>{{story.story}}</p><br><p style='color: #895753;'>-{{name}} {{story.date}}</p></div>";
+                            <div class='background'>
+                                <div class='story-display'><p style='color: #897C7B;'>{{story.story}}</p><br><p style='color: #895753;'>-{{name}} {{story.date}}</p></div>
                                 </div>
                             </div>
                     </div>
