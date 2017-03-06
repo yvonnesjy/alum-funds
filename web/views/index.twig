@@ -34,7 +34,7 @@
                     {% endif %}
                     {% set commentStyle = commentStyle ~ ".comment-" ~ story.id ~ ", " %}
                     <script>
-                        .comment-{{story.id}}.style.backgroundImage = 'url({{ '../images/pic-' ~ story.id % app.num_images ~ '.jpg' }})'
+                        .comment-{{story.id}}.style.backgroundImage = 'url({{ '../images/pic-' ~ story.id % app.num_images ~ '.jpg' }})';
                     </script>
                     <div class={{'comment-'~story.id}}>
                         <div class='content'>
