@@ -44,7 +44,7 @@ $result = pg_query($pg_conn, $query);
 $stories = array();
 if (pg_num_rows($result)) {
   while ($row = pg_fetch_row($result)) {
-    // $app['monolog']->addDebug('Row ' . $row[0].$row[5]);
+    $app['monolog']->addDebug('Row ' . $row[5]." ".$row[6]);
     $stories[] = array('date' => $row[0],
                       'first' => $row[1], 
                       'sister' => $row[2],
