@@ -21,131 +21,150 @@
                             <img src="../images/logo.png" class="img-responsive logo" alt="DPhiL Logo">
                             <h1 class="site-name">Thanks, DPhiL!<3</h1>
                         </div>
+                        <div class="scroll">Scroll to check out more DPhiL stories &#x2228;</div>
                     </div>
                 </div>
 
-            {% set commentStyle = "" %}
-            {% if app.stories is defined %}
-                {% for story in app.stories %}
-                    {% if not story.anonymous %}
-                        {% set name = story.first ~ " \"" ~ story.sister ~ "\" " ~ story.last%}
-                    {% else %}
-                        {% set name = "" %}
-                    {% endif %}
-                    {% set commentStyle = commentStyle ~ ".comment-" ~ story.id ~ ", " %}
-                    <div class={{'comment-'~story.id}}>
-                        <div class='content'>
-                            <div class='background'>
-                                <div class='story-display'><p style='color: #897C7B;'>{{story.story}}</p><br><p style='color: #895753;'>-{{name}} {{story.date}}</p></div>
+                {% set commentStyle = "" %}
+                {% if app.stories is defined %}
+                    {% for story in app.stories %}
+                        {% if story.anonymous == 'f' %}
+                            {% set name = story.first ~ " \"" ~ story.sister ~ "\" " ~ story.last%}
+                        {% else %}
+                            {% set name = "Anonymous" %}
+                        {% endif %}
+                        {% set commentStyle = commentStyle ~ ".comment-" ~ story.id ~ ", " %}
+                        <div class={{'comment-'~story.id}}>
+                            <div class='content'>
+                                <div class='background'>
+                                    <div class='story-display'><p style='color: #897C7B;'>{{story.story}}</p><br><p style='color: #895753;'>-{{name}} {{story.date}}</p></div>
+                                    </div>
                                 </div>
-                            </div>
-                    </div>
-                    <script>
-                        document.getElementsByClassName('comment-{{story.id}}')[0].style.backgroundImage = 'url({{ '../images/pic-' ~ story.id % app.num_images ~ '.jpg' }})';
-                    </script>
-                {% endfor %}
-            {% endif %}
+                        </div>
+                        <script>
+                            document.getElementsByClassName('comment-{{story.id}}')[0].style.backgroundImage = 'url({{ '../images/pic-' ~ story.id % app.num_images ~ '.jpg' }})';
+                        </script>
+                    {% endfor %}
+                {% endif %}
 
-            <style type='text/css'>{{commentStyle[:commentStyle|length - 2]}}
-                {
-                    height: 100%;
-                    width: 100%;
-                    display: table;
-                    background-attachment: fixed;
-                    background-position: center;
-                    background-repeat: no-repeat;
-                    background-size: cover;
-                }
-            </style>
+                <style type='text/css'>{{commentStyle[:commentStyle|length - 2]}}
+                    {
+                        height: 100%;
+                        width: 100%;
+                        display: table;
+                        background-attachment: fixed;
+                        background-position: center;
+                        background-repeat: no-repeat;
+                        background-size: cover;
+                    }
+                </style>
 
             </div>
             <div id="right-panel" class="col-md-4">
                 <form id="form" name="form" action="../insertIntoDB.php" method="POST">
-                    <span class="payment-errors"></span>
-                    <legend>GIVE US MONEY</legend>
-                    <div class="form-row">
-                        <label for="name">
-                            <span>I am</span>
-                            <select id="name" name="name" required="true">
-                                <option value="default" disabled>--</option>
-                                <option disabled>- Charter -</option>
-                                {% set class = "Charter" %}
-                                {% if app.sisters is defined %}
-                                    {% for sister in app.sisters %}
-                                        {% if sister.class != class %}
-                                            {% set class = sister.class %}
-                                            <option disabled> </option>
-                                            <option disabled>- {{sister.class}} -</option>
-                                        {% endif %}
-                                        <option value={{sister.number|format("%02d")}}>#{{sister.number|format("%02d")}} {{sister.first}} "{{sister.sister}}" {{sister.last}}</option>
-                                    {% endfor %}
-                                {% endif %}
-                            </select>
-                        </label>
-                    </div>
+                    {# <span class="payment-errors"></span> #}
+                    <legend>Here's to the memories we made...</legend>
 
-                    <div class="form-row">
-                        <label for="email">
-                            <span>Email</span>
-                            <input type="email" id="email" name="email" required="true">
-                        </label>
-                    </div>
-                    
-                    <div class="form-row">
-                        <label for="amount">
-                            <span>Amount</span>
-                            <input type="number" id="amount" name="amount" required="true">
-                        </label>
-                    </div>
-                    
-                    <div class="form-row">
-                        <label for="purpose">
-                            <span>Purpose</span>
-                            <input type="text" id="purpose" name="purpose">
-                        </label>
-                    </div>
-                    
-                    <div class="form-row">
-                        <label for="story">
-                            <span>What's your story with DPhiL?</span>
-                            <textarea id="story" name="story" rows="6" required="true"></textarea>
-                        </label>
-                    </div>
+                    <label for="name">
+                        <span><font color="#b94646">*</font>I am</span>
+                        <select id="name" name="name" required="true">
+                            <option value="default" disabled selected>--</option>
+                            <option disabled>- Charter -</option>
+                            {% set class = "Charter" %}
+                            {% if app.sisters is defined %}
+                                {% for sister in app.sisters %}
+                                    {% if sister.class != class %}
+                                        {% set class = sister.class %}
+                                        <option disabled> </option>
+                                        <option disabled>- {{sister.class}} -</option>
+                                    {% endif %}
+                                    <option value={{sister.number|format("%02d")}}>#{{sister.number|format("%02d")}} {{sister.first}} "{{sister.sister}}" {{sister.last}}</option>
+                                {% endfor %}
+                            {% endif %}
+                        </select>
+                    </label>
 
-                    <div class="form-row">
-                        <label>
-                            <span>Card Number</span>
-                            <input type="text" size="20" maxlength="20" data-stripe="number" required="true">
-                        </label>
-                    </div>
+                    <br>
+                    <label for="email">
+                        <span><font color="#b94646">*</font>Email</span>
+                        <input type="email" id="email" name="email" required="true">
+                    </label>
+                
+                    <br>
+                    <label for="amount">
+                        <span><font color="#b94646">*</font>Amount</span>
+                        <input type="number" id="amount" name="amount" required="true">
+                    </label>
+                
+                    <br>
+                    <label for="purpose">
+                        <span>The money goes to</span>
+                        <input type="text" id="purpose" name="purpose">
+                    </label>
+                
+                    <br>
+                    <label for="story">
+                        <span><font color="#b94646">*</font>What memory do you want to share?</span>
+                        <textarea id="story" name="story" rows="6" required="true"></textarea>
+                    </label>
 
-                    <div class="form-row">
-                        <label>
-                            <span>Expiration (MM/YY)</span>
-                            <input class="exp" type="text" size="2" maxlength="2" data-stripe="exp_month" required="true">
-                            <span> / </span>
-                            <input class="exp" type="text" size="2" maxlength="2" data-stripe="exp_year" required="true">
-                        </label>
-                    </div>
+                    <br>
+                    <label>
+                        <span><font color="#b94646">*</font>Card Number</span>
+                        <input type="text" size="20" maxlength="20" data-stripe="number" required="true">
+                    </label>
 
-                    <div class="form-row">
-                        <label>
-                            <span>CVC</span>
-                            <input type="text" size="4" maxlength="4" data-stripe="cvc" required="true">
-                        </label>
-                        &emsp;
-                        <label>
-                            <span>Billing Zip</span>
-                            <input type="text" size="6" maxlength="6" data-stripe="address_zip" required="true">
-                        </label>
-                    </div>
+                    <br>
+                    <label>
+                        <span><font color="#b94646">*</font>Expiration Date</span>
+                        <select class="exp" data-stripe="exp_month" required="true">
+                            <option value="default" disabled selected>MM</option>
+                            <option value="01">01</option>
+                            <option value="02">02</option>
+                            <option value="03">03</option>
+                            <option value="04">04</option>
+                            <option value="05">05</option>
+                            <option value="06">06</option>
+                            <option value="07">07</option>
+                            <option value="08">08</option>
+                            <option value="09">09</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                        </select>
+                        <span>/</span>
+                        <select class="exp" data-stripe="exp_year" required="true">
+                            <option value="default" disabled selected>YY</option>
+                            {% set currentYear = "now"|date("Y") %}
+                            {% for year in currentYear..(currentYear + 20) %}
+                                <option value={{year % 100}}>{{year % 100}}</option>
+                            {% endfor %}
+                        </select>
+                    </label>
 
-                    <div class="form-row, anonymous-checkbox">
+                    <br>
+                    <label>
+                        <span><font color="#b94646">*</font>CVC</span>
+                        <input type="text" size="4" maxlength="4" data-stripe="cvc" required="true">
+                    </label>
+
+                    &emsp;
+                    <label>
+                        <span><font color="#b94646">*</font>Billing Zip</span>
+                        <input type="text" size="6" maxlength="6" data-stripe="address_zip" required="true">
+                    </label>
+
+                    <br>
+                    <div class="anonymous-checkbox">
                         <input type="checkbox" name="anonymous" value="anonymous">
                         <label for="anonymous" class="anonymous-label">Post my story anonymously</label>
                     </div>
 
+                    <br><br>
                     <button type="submit" class="submit" id="custom-button">I'm ready to donate!</button>
+
+                    <br><br>
+                    <label><font color="#b94646">*</font> Required</label>
                 </form>
             </div>
         </div>
@@ -168,45 +187,6 @@
             }
         }
     </script>
-    <script type="text/javascript">
-        Stripe.setPublishableKey('pk_test_DuyFhe6ZKiJbjFgdJ57dpOFd');
-
-        $(function() {
-            var $form = $('#form');
-            $form.submit(function(event) {
-                // Disable the submit button to prevent repeated clicks:
-                $form.find('.submit').prop('disabled', true);
-
-                // Request a token from Stripe:
-                Stripe.card.createToken($form, stripeResponseHandler);
-
-            // Prevent the form from being submitted:
-                return false;
-            });
-        });
-
-        function stripeResponseHandler(status, response) {
-            // Grab the form:
-            var $form = $('#form');
-
-            if (response.error) { // Problem!
-
-                // Show the errors on the form:
-                $form.find('.payment-errors').text(response.error.message);
-                $form.find('.submit').prop('disabled', false); // Re-enable submission
-
-            } else { // Token was created!
-
-                // Get the token ID:
-                var token = response.id;
-
-                // Insert the token ID into the form so it gets submitted to the server:
-                $form.append($('<input type="hidden" name="stripeToken">').val(token));
-
-                // Submit the form:
-                $form.get(0).submit();
-            }
-        };
-    </script>
+    <script type="text/javascript" src="../scripts/getAndSendStripeToken.js"></script>
 </body>
 </html>

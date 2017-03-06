@@ -26,8 +26,16 @@ if (isset($_POST)) {
         "description" => $description
         ));
 
-        extract(parse_url(getenv('DATABASE_URL')));
-        $pg_conn = pg_connect("user=$user password=$pass host=$host port=$port dbname=".ltrim($path, '/'));
+        $user = 'sbyqoykaxdtcbd';
+        $dbname = 'ddc85v730ush9e';
+        $pass = 'ca188649905b508b4bd725a75e646f2a3b9a49a72c745740bf6007e99c7f14bb';
+        $host = 'ec2-107-22-244-62.compute-1.amazonaws.com';
+        $port = '5432';
+        $path = 'postgres://sbyqoykaxdtcbd:ca188649905b508b4bd725a75e646f2a3b9a49a72c745740bf6007e99c7f14bb@ec2-107-22-244-62.compute-1.amazonaws.com:5432/ddc85v730ush9e';
+
+        // extract(parse_url(getenv('DATABASE_URL')));
+        $pg_conn = pg_connect("user=$user password=$pass host=$host port=$port dbname=$dbname");
+        // $pg_conn = pg_connect("user=$user password=$pass host=$host port=$port dbname=".ltrim($path, '/'));
 
         $query = "select * from donations";
         $result = pg_query($pg_conn, $query);
@@ -38,10 +46,12 @@ if (isset($_POST)) {
             $anonymous = 'true';
         }
         $query = "insert into donations values (".$id.", '".date("Y-m-d")."', ".$_POST['amount'].", '".$_POST['name']."', '".$_POST['story']."', '".$_POST['purpose']."', ".$anonymous.")";
-        pg_query($conn, $query);
+        pg_query($pg_conn, $query);
+
+        redirect("")
     } catch(\Stripe\Error\Card $e) {
       // The card has been declined
     }
-    redirect("views/index.twig");
+    redirect("index.php");
 }
 ?>

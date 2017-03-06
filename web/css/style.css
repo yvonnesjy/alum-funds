@@ -51,6 +51,18 @@ html, body {
     vertical-align: middle;
 }
 
+.scroll {
+    font-family: 'Shadows Into Light', cursive;
+    color: #cccccc;
+    font-size: 2vw;
+    position: absolute;
+    bottom: 0;
+    right: 2vw;
+    /*display: table-cell;
+    text-align: right;
+    ver*/tical-align: bottom;
+}
+
 #story {
     width: 100%;
     height: 20vw;
@@ -104,7 +116,7 @@ textarea {
 }
 
 .exp {
-    width: 10%;
+    width: 20%;
 }
 
 #custom-button {
