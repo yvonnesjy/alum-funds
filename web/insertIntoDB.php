@@ -33,11 +33,11 @@ if (isset($_POST)) {
         $result = pg_query($pg_conn, $query);
 
         $id = pg_num_rows($result);
-        $anonymous = 0;
+        $anonymous = 'false';
         if (isset($_POST['anonymous'])) {
-            $anonymous = 1;
+            $anonymous = 'true';
         }
-        $query = "insert into donations values ('".date("Y-m-d")."', ".$_POST['amount'].", '".$_POST['name']."', '".$_POST['story']."', ".$id.", '".$_POST['purpose']."', ".$anonymous.")";
+        $query = "insert into donations values (".$id.", '".date("Y-m-d")."', ".$_POST['amount'].", '".$_POST['name']."', '".$_POST['story']."', '".$_POST['purpose']."', ".$anonymous.")";
         pg_query($conn, $query);
     } catch(\Stripe\Error\Card $e) {
       // The card has been declined
