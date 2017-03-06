@@ -5,6 +5,7 @@ ini_set('display_errors', 1);
 
 require('../vendor/autoload.php');
 
+global $app;
 $app = new Silex\Application();
 $app['debug'] = true;
 
