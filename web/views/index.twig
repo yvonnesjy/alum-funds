@@ -33,9 +33,6 @@
                         {% set name = "" %}
                     {% endif %}
                     {% set commentStyle = commentStyle ~ ".comment-" ~ story.id ~ ", " %}
-                    <script>
-                        document.getElementByClassName('comment-' ~ {{story.id}}).style.backgroundImage = 'url({{ '../images/pic-' ~ story.id % app.num_images ~ '.jpg' }})';
-                    </script>
                     <div class={{'comment-'~story.id}}>
                         <div class='content'>
                             <div class='background'>
@@ -43,6 +40,9 @@
                                 </div>
                             </div>
                     </div>
+                    <script>
+                        document.getElementsByClassName('comment-{{story.id}}')[0].style.backgroundImage = 'url({{ '../images/pic-' ~ story.id % app.num_images ~ '.jpg' }})';
+                    </script>
                 {% endfor %}
             {% endif %}
 

@@ -8,8 +8,16 @@ require('../vendor/autoload.php');
 $app = new Silex\Application();
 $app['debug'] = true;
 
+$user = 'sbyqoykaxdtcbd';
+$dbname = 'ddc85v730ush9e';
+$pass = 'ca188649905b508b4bd725a75e646f2a3b9a49a72c745740bf6007e99c7f14bb';
+$host = 'ec2-107-22-244-62.compute-1.amazonaws.com';
+$port = '5432';
+$path = 'postgres://sbyqoykaxdtcbd:ca188649905b508b4bd725a75e646f2a3b9a49a72c745740bf6007e99c7f14bb@ec2-107-22-244-62.compute-1.amazonaws.com:5432/ddc85v730ush9e';
+
 extract(parse_url(getenv('DATABASE_URL')));
-$pg_conn = pg_connect("user=$user password=$pass host=$host port=$port dbname=".ltrim($path, '/'));
+$pg_conn = pg_connect("user=$user password=$pass host=$host port=$port dbname=$dbname");
+// $pg_conn = pg_connect("user=$user password=$pass host=$host port=$port dbname=".ltrim($path, '/'));
 
 // Register the monolog logging service
 $app->register(new Silex\Provider\MonologServiceProvider(), array(
