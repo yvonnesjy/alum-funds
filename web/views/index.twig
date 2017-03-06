@@ -34,7 +34,7 @@
                     {% endif %}
                     {% set commentStyle = commentStyle ~ ".comment-" ~ story.id ~ ", " %}
                     <script>
-                        .comment-{{story.id}}.style.backgroundImage = 'url({{ '\'../images/pic-' ~ story.id % app.num_images ~ '.jpg\'' }})';
+                        document.comment-{{story.id}}.style.backgroundImage = 'url({{ '../images/pic-' ~ story.id % app.num_images ~ '.jpg' }})';
                     </script>
                     <div class={{'comment-'~story.id}}>
                         <div class='content'>
@@ -77,7 +77,7 @@
                                             <option disabled> </option>
                                             <option disabled>- {{sister.class}} -</option>
                                         {% endif %}
-                                        <option value={{'\''~sister.number|format("%02d")~'\''}}>#{{sister.number|format("%02d")}} {{sister.first}} "{{sister.sister}}" {{sister.last}}</option>
+                                        <option value={{sister.number|format("%02d")}}>#{{sister.number|format("%02d")}} {{sister.first}} "{{sister.sister}}" {{sister.last}}</option>
                                     {% endfor %}
                                 {% endif %}
                             </select>
