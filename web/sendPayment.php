@@ -1,37 +1,27 @@
 <?php
 include 'utils.php';
-include 'index.php';
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 require_once('stripe/init.php');
 
-$curl = new \Stripe\HttpClient\CurlClient(array(CURLOPT_SSLVERSION => CURL_SSLVERSION_TLSv1));
-\Stripe\ApiRequestor::setHttpClient($curl);
-
 if (isset($_POST)) {
 
+    $curl = new \Stripe\HttpClient\CurlClient(array(CURLOPT_SSLVERSION => CURL_SSLVERSION_TLSv1));
+    \Stripe\ApiRequestor::setHttpClient($curl);
     \Stripe\Stripe::setApiKey("sk_test_YRQsjn2dGpluxMPWQKBlKxPR");
-
-    // Get the credit card details submitted by the form
-    $token = $_POST['stripeToken'];
-    $amount = $_POST['amount'] * 100;
-    $description = "Donation made by ".$_POST['name'];
 
     // Create a charge: this will charge the user's card
     try {
         $charge = \Stripe\Charge::create(array(
-        "amount" => $amount, // Amount in cents
+        "amount" => $_POST['amount'] * 100, // Amount in cents
         "currency" => "usd",
-        "source" => $token,
-        "description" => $description
+        "source" => $_POST['stripeToken'],
+        "description" => "Donation to Delta Phi Lambda",
+        "receipt_email" => $_POST['email']
         ));
         
         updateDB();
-
-        global $app;
-        $app['name'] = explode(" ", $_POST['name'])[1];
-        redirect("views/success.twig");
     } catch(\Stripe\Error\Card $e) {
       // The card has been declined
     }
@@ -59,8 +49,8 @@ function updateDB() {
         $anonymous = 'true';
     }
 
-    $number = explode(" ", $_POST['name'])[0];
-    $query = "insert into donations values (".$id.", '".date("Y-m-d")."', ".$_POST['amount'].", '".$number."', '".$_POST['story']."', '".$_POST['purpose']."', ".$anonymous.")";
+    $number = explode("_", $_POST['name'])[0];
+    $query = "insert into donations values (".$id.", '".date("Y-m-d")."', ".$_POST['amount'].", '".$number."', '".$_POST['story']."', '".$_POST['purpose']."', ".$anonymous.", '".$_POST['email']."')";
     pg_query($pg_conn, $query);
 }
 ?>

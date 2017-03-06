@@ -77,7 +77,7 @@
                                         <option disabled> </option>
                                         <option disabled>- {{sister.class}} -</option>
                                     {% endif %}
-                                    <option value={{sister.number|format("%02d") ~ " " ~ sister.first}}>#{{sister.number|format("%02d")}} {{sister.first}} "{{sister.sister}}" {{sister.last}}</option>
+                                    <option value={{sister.number|format("%02d") ~ "_" ~ sister.first}}>#{{sister.number|format("%02d")}} {{sister.first}} "{{sister.sister}}" {{sister.last}}</option>
                                 {% endfor %}
                             {% endif %}
                         </select>
