@@ -94,10 +94,14 @@ html, body {
     height: 20vw;
 }
 
-#custom-button, label, legend {
+#custom-button, span, label, legend, #payment-errors {
     color: #897C7B;
     font-family: 'Shadows Into Light', cursive;
     font-size: 1.4vw;
+}
+
+#payment-errors {
+    color: #b94646;
 }
 
 .anonymous-checkbox {

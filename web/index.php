@@ -1,4 +1,5 @@
 <?php
+session_start();
 include 'utils.php';
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
@@ -80,6 +81,16 @@ if ($files != false) {
 $app['stories'] = $stories;
 $app['sisters'] = $sisters;
 $app['num_images'] = $num_images;
+$app['suc_msg'] = "";
+$app['err_msg'] = "";
+if (isset($_SESSION['suc_msg'])) {
+  $app['suc_msg'] = $_SESSION['suc_msg'];
+  unset($_SESSION['suc_msg']);
+}
+if (isset($_SESSION['err_msg'])) {
+  $app['err_msg'] = $_SESSION['err_msg'];
+  unset($_SESSION['err_msg']);
+}
 
 $app->run();
 ?>

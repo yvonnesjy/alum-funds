@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scal=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Thanks, DPhiL</title>
     <link rel="stylesheet" type="text/css" href="../css/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="../css/style.css">
@@ -63,7 +63,7 @@
             <div id="right-panel">
                 <button type="button" id="close-button">X</button>
                 <form id="form" name="form" action="../sendPayment.php" method="POST">
-                    {# <span class="payment-errors"></span> #}
+                    <span id="payment-errors">{{app.err_msg}}</span>
                     <legend>Here's to the memories we made...</legend>
 
                     <label for="name">
@@ -176,18 +176,20 @@
     <script type="text/javascript" src="../scripts/getAndSendStripeToken.js"></script>
     <script type="text/javascript" src="../scripts/responsive.js"></script>
     <script type="text/javascript">
-        function validateForm() {
-            var name = document.forms['form']['name'].value;
-            if (name != "default") {
-                alert("Name must be filled out");
-                return false;
-            }
+        if (isMobile()) {
+            var err = document.getElementById('payment-errors');
+            err.setAttribute("class", "hidden");
 
-            var email = document.forms['form']['email'].value;
-            if (!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email.value))) {
-                alert("You have entered an invalid email address!")
-                return false;
-            }
+            {% if app.err_msg is not empty %}
+                alert("{{app.err_msg}}");
+            {% endif %}
+            {% if app.suc_msg is not empty %}
+                alert("{{app.suc_msg}}");
+            {% endif %}
+        } else {
+            {% if app.suc_msg is not empty %}
+                $('#form').find('legend').text("We appreciate your donation, {{app.suc_msg}}! <3");
+            {% endif %}
         }
     </script>
 </body>

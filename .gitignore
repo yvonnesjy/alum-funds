@@ -2,3 +2,5 @@ vendor/
 .env
 
 web/test.php
+
+web/test.js

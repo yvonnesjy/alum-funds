@@ -1,4 +1,10 @@
 function updateLayout() {
+    var leftPanel;
+    var rightPanel;
+    var rowPanel;
+    var donateBtn;
+    var closeBtn;
+
     if (window.innerHeight / window.innerWidth < 1) {
         $("body").css("zoom", "1");
         $("body").css("-webkit-text-size-adjust", "100%");

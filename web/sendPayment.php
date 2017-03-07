@@ -1,4 +1,5 @@
 <?php
+session_start();
 include 'utils.php';
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
@@ -22,9 +23,45 @@ if (isset($_POST)) {
         ));
         
         updateDB();
+
+        $_SESSION['suc_msg'] = explode("_", $_POST['name'])[1];
     } catch(\Stripe\Error\Card $e) {
-      // The card has been declined
+        // Since it's a decline, \Stripe\Error\Card will be caught
+        $body = $e->getJsonBody();
+        $err  = $body['error'];
+        $_SESSION['err_msg'] = $err['message'];
+    } catch (\Stripe\Error\RateLimit $e) {
+        // Too many requests made to the API too quickly
+        $body = $e->getJsonBody();
+        $err  = $body['error'];
+        $_SESSION['err_msg'] = $err['message'];
+    } catch (\Stripe\Error\InvalidRequest $e) {
+        // Invalid parameters were supplied to Stripe's API
+        $body = $e->getJsonBody();
+        $err  = $body['error'];
+        $_SESSION['err_msg'] = $err['message'];
+    } catch (\Stripe\Error\Authentication $e) {
+        // Authentication with Stripe's API failed
+        // (maybe you changed API keys recently)
+        $body = $e->getJsonBody();
+        $err  = $body['error'];
+        $_SESSION['err_msg'] = $err['message'];
+    } catch (\Stripe\Error\ApiConnection $e) {
+        // Network communication with Stripe failed
+        $body = $e->getJsonBody();
+        $err  = $body['error'];
+        $_SESSION['err_msg'] = $err['message'];
+    } catch (\Stripe\Error\Base $e) {
+        // Display a very generic error to the user, and maybe send
+        // yourself an email
+        $body = $e->getJsonBody();
+        $err  = $body['error'];
+        $_SESSION['err_msg'] = $err['message'];
+    } catch (Exception $e) {
+        // Something else happened, completely unrelated to Stripe
+        $_SESSION['err_msg'] = "An error occurred. Please try again.\n If this keeps happenning, email Yvonne(stonfish@hotmail.com).";
     }
+
     redirect("index.php");
 }
 
