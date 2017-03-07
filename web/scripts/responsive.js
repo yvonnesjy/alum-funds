@@ -1,6 +1,9 @@
 function updateLayout() {
     if (window.innerHeight / window.innerWidth < 1) {
         $("body").css("zoom", "1");
+        $("body").css("-webkit-text-size-adjust", "100%");
+        $("body").css("-moz-text-size-adjust", "100%");
+        $("body").css("-ms-text-size-adjust", "100%");
 
         leftPanel = document.getElementById('left-panel');
         rightPanel = document.getElementById('right-panel');
@@ -23,6 +26,9 @@ function updateLayout() {
         closeBtn.setAttribute('class', 'hidden');
     } else {
         $("body").css("zoom", "2");
+        $("body").css("-webkit-text-size-adjust", "200%");
+        $("body").css("-moz-text-size-adjust", "200%");
+        $("body").css("-ms-text-size-adjust", "200%");
 
         leftPanel = document.getElementById('left-panel');
         rightPanel = document.getElementById('right-panel');
