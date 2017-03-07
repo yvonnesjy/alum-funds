@@ -87,7 +87,7 @@ function updateDB() {
     }
 
     $number = explode("_", $_POST['name'])[0];
-    $query = "insert into donations values (".$id.", '".date("Y-m-d")."', ".$_POST['amount'].", '".$number."', '".$_POST['story']."', '".$_POST['purpose']."', ".$anonymous.", '".$_POST['email']."')";
+    $query = "insert into donations values (".$id.", '".date("Y-m-d")."', ".$_POST['amount'].", '".$number."', '".$_POST['story']."', '".$_POST['purpose']."', ".$anonymous.")";
     pg_query($pg_conn, $query);
 }
 ?>
