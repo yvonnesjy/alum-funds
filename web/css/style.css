@@ -9,6 +9,7 @@ html, body {
     height: 100%;
     width: 100%;
     display: table;
+    position: relative;
     background-image: url("../images/cover.jpg");
     background-attachment: fixed;
     background-position: center;
@@ -58,9 +59,34 @@ html, body {
     position: absolute;
     bottom: 0;
     right: 2vw;
-    /*display: table-cell;
-    text-align: right;
-    ver*/tical-align: bottom;
+}
+
+#donate-button {
+    color: white;
+    font-family: 'Shadows Into Light', cursive;
+    font-weight: bold;
+    font-size: 2.5vw;
+    position: fixed;
+    top: 2vw;
+    right: 2vw;
+    z-index: 100;
+
+    background-color: transparent;
+    border: none;
+}
+
+#close-button {
+    color: #897C7B;
+    font-family: 'Shadows Into Light', cursive;
+    font-weight: bold;
+    font-size: 2.5vw;
+    position: fixed;
+    top: 0;
+    right: 2vw;
+    z-index: 100;
+
+    background-color: transparent;
+    border: none;
 }
 
 #story {
@@ -138,6 +164,7 @@ textarea {
 
 #right-panel {
     overflow: auto;
+    padding: 15px;
 }
 
 * {

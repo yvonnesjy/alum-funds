@@ -13,15 +13,16 @@
 <body>
     <div class="container">
         <div class="row">
-            <div id="left-panel" class="col-md-8">
+            <div id="left-panel">
+                <button type="button" id="donate-button">Donate!</button>
                 <div class="cover" align="center">
                     <div class="content">
                         <div class="background">
                             <img src="../images/logo.png" class="img-responsive logo" alt="DPhiL Logo">
                             <h1 class="site-name">Thanks, DPhiL!<3</h1>
                         </div>
-                        <div class="scroll">Scroll to check out more DPhiL stories &#x2228;</div>
                     </div>
+                    <div class="scroll">Scroll to check out more DPhiL stories &#x2228;</div>
                 </div>
 
                 {% set commentStyle = "" %}
@@ -59,7 +60,8 @@
                 </style>
 
             </div>
-            <div id="right-panel" class="col-md-4">
+            <div id="right-panel">
+                <button type="button" id="close-button">X</button>
                 <form id="form" name="form" action="../sendPayment.php" method="POST">
                     {# <span class="payment-errors"></span> #}
                     <legend>Here's to the memories we made...</legend>
@@ -172,32 +174,7 @@
     <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script type="text/javascript" src="../scripts/getAndSendStripeToken.js"></script>
-    <script type="text/javascript">
-        if (window.innerHeight / window.innerWidth < 1) {
-            leftStyle = document.getElementById('left-panel').style;
-            rightStyle = document.getElementById('right-panel').style;
-            rowStyle = document.getElementsByClassName('row')[0].style;
-
-            leftStyle.height = "100%";
-            leftStyle.width = "66.66%";
-
-            rightStyle.height = "100%";
-            rightStyle.width = "33.33%";
-            rightStyle.boxShadow = "-3px 4px 14px 0px #888888";
-
-            rowStyle.display = "-webkit-flex";
-        } else {
-            leftStyle = document.getElementById('left-panel').style;
-            rightStyle = document.getElementById('right-panel').style;
-
-            leftStyle.height = "70%";
-            leftStyle.width = "100%";
-
-            rightStyle.height = "30%";
-            rightStyle.width = "100%";
-            rightStyle.boxShadow = "0px -3px 14px 0px #888888";
-        }
-    </script>
+    <script type="text/javascript" src="../scripts/responsive.js"></script>
     <script type="text/javascript">
         function validateForm() {
             var name = document.forms['form']['name'].value;
