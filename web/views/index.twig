@@ -171,6 +171,33 @@
 
     <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script type="text/javascript" src="../scripts/getAndSendStripeToken.js"></script>
+    <script type="text/javascript">
+        if (window.innerHeight / window.innerWidth < 1) {
+            leftStyle = document.getElementById('left-panel').style;
+            rightStyle = document.getElementById('right-panel').style;
+            rowStyle = document.getElementsByClassName('row')[0].style;
+
+            leftStyle.height = "100%";
+            leftStyle.width = "66.66%";
+
+            rightStyle.height = "100%";
+            rightStyle.width = "33.33%";
+            rightStyle.boxShadow = "-3px 4px 14px 0px #888888";
+
+            rowStyle.display = "-webkit-flex";
+        } else {
+            leftStyle = document.getElementById('left-panel').style;
+            rightStyle = document.getElementById('right-panel').style;
+
+            leftStyle.height = "70%";
+            leftStyle.width = "100%";
+
+            rightStyle.height = "30%";
+            rightStyle.width = "100%";
+            rightStyle.boxShadow = "0px -3px 14px 0px #888888";
+        }
+    </script>
     <script type="text/javascript">
         function validateForm() {
             var name = document.forms['form']['name'].value;
@@ -186,6 +213,5 @@
             }
         }
     </script>
-    <script type="text/javascript" src="../scripts/getAndSendStripeToken.js"></script>
 </body>
 </html>
