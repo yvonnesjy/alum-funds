@@ -17,6 +17,8 @@ if (window.innerHeight / window.innerWidth < 1) {
     donateBtn.setAttribute('class', 'hidden');
     closeBtn.setAttribute('class', 'hidden');
 } else {
+    $("body").css("zoom", "2");
+
     leftPanel = document.getElementById('left-panel');
     rightPanel = document.getElementById('right-panel');
     donateBtn = document.getElementById('donate-button');
