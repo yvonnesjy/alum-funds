@@ -21,6 +21,20 @@ $(function() {
             return false;
         }
 
+        var story = document.forms['form']['story'].value;
+        if (story === "") {
+            $form.find('legend').text("Here's to the memories we made...");
+
+            if (isMobile()) {
+                alert("Share your DPhiL story with us, please? ;)");
+            } else {
+                $form.find('#payment-errors').text("Share your DPhiL story with us, please? ;)");
+            }
+
+            $form.find('.submit').prop('disabled', false);
+            return false;
+        }
+
         // Request a token from Stripe:
         Stripe.card.createToken($form, stripeResponseHandler);
 

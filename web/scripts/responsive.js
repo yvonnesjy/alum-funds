@@ -11,6 +11,18 @@ function updateLayout() {
         $("body").css("-moz-text-size-adjust", "100%");
         $("body").css("-ms-text-size-adjust", "100%");
 
+        var inputs = document.getElementsByTagName("input");
+        for (index = 0; index < inputs.length; ++index) {
+            inputs[index].style.marginBottom = "2vw";
+        }
+
+        var selects = document.getElementsByTagName("select");
+        for (index = 0; index < selects.length; ++index) {
+            selects[index].style.marginBottom = "2vw";
+        }
+
+        document.getElementsByTagName("textarea")[0].style.marginBottom = "2vw";
+
         leftPanel = document.getElementById('left-panel');
         rightPanel = document.getElementById('right-panel');
         rowPanel = document.getElementsByClassName('row')[0];
@@ -35,6 +47,18 @@ function updateLayout() {
         $("body").css("-webkit-text-size-adjust", "200%");
         $("body").css("-moz-text-size-adjust", "200%");
         $("body").css("-ms-text-size-adjust", "200%");
+
+        var inputs = document.getElementsByTagName("input");
+        for (index = 0; index < inputs.length; ++index) {
+            inputs[index].style.marginBottom = "0vw";
+        }
+
+        var selects = document.getElementsByTagName("select");
+        for (index = 0; index < selects.length; ++index) {
+            selects[index].style.marginBottom = "0vw";
+        }
+
+        document.getElementsByTagName("textarea")[0].style.marginBottom = "0vw";
 
         leftPanel = document.getElementById('left-panel');
         rightPanel = document.getElementById('right-panel');

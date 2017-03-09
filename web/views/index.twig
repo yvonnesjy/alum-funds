@@ -9,6 +9,8 @@
     <link rel="stylesheet" type="text/css" href="../css/style.css">
     <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Shadows+Into+Light" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Advent+Pro" rel="stylesheet">
 </head>
 <body>
     <div class="container">
@@ -37,7 +39,7 @@
                         <div class={{'comment-'~story.id}}>
                             <div class='content'>
                                 <div class='background'>
-                                    <div class='story-display'><p style='color: #897C7B;'>{{story.story}}</p><br><p style='color: #895753;'>-{{name}} {{story.date}}</p></div>
+                                    <div class='story-display'><p style='color: #897C7B;'>{{story.story}}</p><p style='color: #895753;'>-{{name}} {{story.date | date("m.d.Y")}}</p></div>
                                     </div>
                                 </div>
                         </div>
@@ -66,9 +68,9 @@
                     <span id="payment-errors">{{app.err_msg}}</span>
                     <legend>Here's to the memories we made...</legend>
 
-                    <label for="name">
-                        <span><font color="#b94646">*</font>I am</span>
-                        <select id="name" name="name" required="true">
+                    <div style="display:table; width:100%">
+                        <span style="white-space:nowrap"><font color="#b94646">*</font>I am</span>
+                        <select id="name" name="name" required="true" style="width:100%">
                             <option value="default" disabled selected>--</option>
                             <option disabled>- Charter -</option>
                             {% set class = "Charter" %}
@@ -83,42 +85,36 @@
                                 {% endfor %}
                             {% endif %}
                         </select>
-                    </label>
+                    </div>
 
-                    <br>
-                    <label for="email">
-                        <span><font color="#b94646">*</font>Email</span>
-                        <input type="email" id="email" name="email" required="true">
-                    </label>
-                
-                    <br>
-                    <label for="amount">
-                        <span><font color="#b94646">*</font>Amount</span>
-                        <input type="number" id="amount" name="amount" required="true">
-                    </label>
-                
-                    <br>
-                    <label for="purpose">
-                        <span>The money goes to</span>
-                        <input type="text" id="purpose" name="purpose">
-                    </label>
-                
-                    <br>
-                    <label for="story">
-                        <span><font color="#b94646">*</font>What memory do you want to share?</span>
-                        <textarea id="story" name="story" rows="6" required="true"></textarea>
-                    </label>
+                    <div style="display:table; width:100%">
+                        <span style="white-space:nowrap"><font color="#b94646">*</font>Email</span>
+                        <input type="email" id="email" name="email" required="true" style="width:100%">
+                    </div>
 
-                    <br>
-                    <label>
-                        <span><font color="#b94646">*</font>Card Number</span>
-                        <input type="text" size="20" maxlength="20" data-stripe="number" required="true">
-                    </label>
+                    <div style="display:table; width:100%">
+                        <span style="white-space:nowrap"><font color="#b94646">*</font>Amount</span>
+                        <input type="number" id="amount" name="amount" required="true" style="width:100%">
+                    </div>
 
-                    <br>
-                    <label>
-                        <span><font color="#b94646">*</font>Expiration Date</span>
-                        <select class="exp" data-stripe="exp_month" required="true">
+                    <div style="display:table; width:100%">
+                        <span style="white-space:nowrap">The money goes to</span>
+                        <input type="text" id="purpose" name="purpose" style="width:100%">
+                    </div>
+
+                    <div style="display:table; width:100%">
+                        <span style="display:table-row; width:100%"><font color="#b94646">*</font>What memory do you want to share?</span>
+                        <textarea id="story" name="story" rows="6" required="true" style="display:table-row; width:100%"></textarea>
+                    </div>
+
+                    <div style="display:table; width:100%">
+                        <span style="white-space:nowrap"><font color="#b94646">*</font>Card Number</span>
+                        <input type="text" size="20" maxlength="20" data-stripe="number" required="true" style="width:100%">
+                    </div>
+
+                    <div style="display:table; width:100%">
+                        <span style="white-space:nowrap"><font color="#b94646">*</font>Expiration Date</span>
+                        <select class="exp" data-stripe="exp_month" required="true" >
                             <option value="default" disabled selected>MM</option>
                             <option value="01">01</option>
                             <option value="02">02</option>
@@ -141,30 +137,25 @@
                                 <option value={{year % 100}}>{{year % 100}}</option>
                             {% endfor %}
                         </select>
-                    </label>
+                    </div>
 
-                    <br>
-                    <label>
-                        <span><font color="#b94646">*</font>CVC</span>
-                        <input type="text" size="4" maxlength="4" data-stripe="cvc" required="true">
-                    </label>
+                    <div style="display:table; width:100%">
+                        <span style="white-space:nowrap"><font color="#b94646">*</font>CVC</span>
+                        <input type="text" size="4" maxlength="4" data-stripe="cvc" required="true" style="width:100%">
+                    &emsp; &emsp;
+                        <span style="white-space:nowrap"><font color="#b94646">*</font>Billing Zip</span>
+                        <input type="text" size="6" maxlength="6" data-stripe="address_zip" required="true" style="width:100%">
+                    </div>
 
-                    &emsp;
-                    <label>
-                        <span><font color="#b94646">*</font>Billing Zip</span>
-                        <input type="text" size="6" maxlength="6" data-stripe="address_zip" required="true">
-                    </label>
-
-                    <br>
                     <div class="anonymous-checkbox">
                         <input type="checkbox" name="anonymous" value="anonymous">
                         <label for="anonymous" class="anonymous-label">Post my story anonymously</label>
                     </div>
 
-                    <br><br>
+                    <br>
                     <button type="submit" class="submit" id="custom-button">I'm ready to donate!</button>
 
-                    <br><br>
+                    <br>
                     <label><font color="#b94646">*</font> Required</label>
                 </form>
             </div>
@@ -184,7 +175,7 @@
                 alert("{{app.err_msg}}");
             {% endif %}
             {% if app.suc_msg is not empty %}
-                alert("{{app.suc_msg}}");
+                alert("We appreciate your donation, {{app.suc_msg}}! <3");
             {% endif %}
         } else {
             {% if app.suc_msg is not empty %}
