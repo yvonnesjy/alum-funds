@@ -24,7 +24,7 @@
                             <h1 class="site-name">Thanks, DPhiL!<3</h1>
                         </div>
                     </div>
-                    <div class="scroll">Scroll to check out more DPhiL stories &#x2228;</div>
+                    <div class="scroll">Scroll to check out more DPhiL stories &#x25BC;</div>
                 </div>
 
                 {% set commentStyle = "" %}
@@ -63,7 +63,7 @@
 
             </div>
             <div id="right-panel">
-                <button type="button" id="close-button">X</button>
+                <button type="button" id="close-button"><font color="#b94646">X</font></button>
                 <form id="form" name="form" action="../sendPayment.php" method="POST">
                     <span id="payment-errors">{{app.err_msg}}</span>
                     <legend>Here's to the memories we made...</legend>
@@ -109,7 +109,7 @@
 
                     <div style="display:table; width:100%">
                         <span style="white-space:nowrap"><font color="#b94646">*</font>Card Number</span>
-                        <input type="text" size="20" maxlength="20" data-stripe="number" required="true" style="width:100%">
+                        <input type="tel" size="20" maxlength="19" data-stripe="number" required="true" style="width:100%">
                     </div>
 
                     <div style="display:table; width:100%">
@@ -141,10 +141,10 @@
 
                     <div style="display:table; width:100%">
                         <span style="white-space:nowrap"><font color="#b94646">*</font>CVC</span>
-                        <input type="text" size="4" maxlength="4" data-stripe="cvc" required="true" style="width:100%">
+                        <input type="tel" size="4" maxlength="4" data-stripe="cvc" required="true" style="width:100%">
                     &emsp; &emsp;
                         <span style="white-space:nowrap"><font color="#b94646">*</font>Billing Zip</span>
-                        <input type="text" size="6" maxlength="6" data-stripe="address_zip" required="true" style="width:100%">
+                        <input type="tel" size="6" maxlength="6" data-stripe="address_zip" required="true" style="width:100%">
                     </div>
 
                     <div class="anonymous-checkbox">

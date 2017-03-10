@@ -34,7 +34,6 @@ function updateLayout() {
 
         rightPanel.style.height = "100%";
         rightPanel.style.width = "33.33%";
-        rightPanel.style.boxShadow = "-3px 4px 14px 0px #888888";
 
         rowPanel.style.display = "-webkit-flex";
 
@@ -71,21 +70,36 @@ function updateLayout() {
         rightPanel.style.height = "100%";
         rightPanel.style.width = "100%";
 
-        rightPanel.setAttribute('class', 'hidden');
         donateBtn.setAttribute('class', 'visible');
         closeBtn.setAttribute('class', 'visible');
 
+        if (!leftPanel.hasAttribute('class')) {
+            leftPanel.setAttribute('class', 'visible');
+            rightPanel.setAttribute('class', 'hidden');
+        } else if (leftPanel.getAttribute('class') == 'visible' && rightPanel.getAttribute('class') == 'visible') {
+            if (wasOnLeft) {
+                leftPanel.setAttribute('class', 'visible');
+                rightPanel.setAttribute('class', 'hidden');
+            } else {
+                rightPanel.setAttribute('class', 'visible');
+                leftPanel.setAttribute('class', 'hidden');
+            }
+        }
+
         donateBtn.onclick = function() {
+            wasOnLeft = false;
             leftPanel.setAttribute('class', 'hidden');
             rightPanel.setAttribute('class', 'visible');
         };
 
         closeBtn.onclick = function() {
+            wasOnLeft = true;
             leftPanel.setAttribute('class', 'visible');
             rightPanel.setAttribute('class', 'hidden');
         };
     }
 }
 
+var wasOnLeft = true;
 $(document).ready(updateLayout);
 $(window).resize(updateLayout);
