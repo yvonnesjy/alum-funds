@@ -40,8 +40,8 @@
                             <div class='content'>
                                 <div class='background'>
                                     <div class='story-display'><p style='color: #897C7B;'>{{story.story}}</p><p style='color: #895753;'>-{{name}} {{story.date | date("m.d.Y")}}</p></div>
-                                    </div>
                                 </div>
+                            </div>
                         </div>
                         <script>
                             document.getElementsByClassName('comment-{{story.id}}')[0].style.backgroundImage = 'url({{ '../images/pic-' ~ story.id % app.num_images ~ '.jpg' }})';

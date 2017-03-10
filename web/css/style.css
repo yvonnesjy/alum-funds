@@ -50,6 +50,16 @@ html, body {
     text-align: center;
     display: table-cell;
     vertical-align: middle;
+    padding: 1vw;
+    -ms-word-break: break-all;
+    -ms-word-wrap: break-all;
+    -webkit-word-break: break-word;
+    -webkit-word-wrap: break-word;
+    word-break: break-word;
+    word-wrap: break-word;
+    -webkit-hyphens: auto;
+    -moz-hyphens: auto;
+    hyphens: auto;
 }
 
 .scroll {
@@ -94,7 +104,7 @@ html, body {
     height: 20vw;
 }
 
-#custom-button, span, label, select, input, #payment-errors {
+#custom-button, span, label, select, input, textarea, #payment-errors {
     color: #897C7B;
     font-family: 'Advent Pro';
     font-size: 1.6vw;
@@ -149,6 +159,9 @@ textarea {
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     border-radius: 8px;
+    overflow: auto;
+    -webkit-overflow-scrolling:touch;
+    resize: none;
 }
 
 .exp {
