@@ -104,7 +104,7 @@ html, body {
     height: 20vw;
 }
 
-#custom-button, span, label, select, input, textarea, #payment-errors {
+#custom-button, span, label, select, input, textarea, #payment-errors, .help-block, .with-errors {
     color: #897C7B;
     font-family: 'Advent Pro';
     font-size: 1.6vw;
@@ -114,6 +114,10 @@ span, input, select, legend {
     display: table-cell;
 }
 
+.help-block, .with-errors {
+    color: #b94646;
+}
+
 #payment-errors {
     color: #b94646;
 }
@@ -121,12 +125,6 @@ span, input, select, legend {
 .anonymous-checkbox {
     display: inline-table;
     width: 100%;
-}
-
-.anonymous {
-    display: table-cell;
-    vertical-align: middle;
-    width: 8%;
 }
 
 .anonymous-label {
@@ -160,7 +158,7 @@ textarea {
     -moz-border-radius: 5px;
     border-radius: 8px;
     overflow: auto;
-    -webkit-overflow-scrolling:touch;
+    -webkit-overflow-scrolling: touch;
     resize: none;
 }
 
