@@ -157,7 +157,7 @@ textarea {
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     border-radius: 8px;
-    overflow: auto;
+    overflow: hidden;
     -webkit-overflow-scrolling: touch;
     resize: none;
 }
@@ -181,11 +181,13 @@ textarea {
 
 #left-panel {
     overflow: auto;
+    -webkit-overflow-scrolling: touch;
     padding: 0px;
 }
 
 #right-panel {
     overflow: auto;
+    -webkit-overflow-scrolling: touch;
     padding: 15px;
 }
 
