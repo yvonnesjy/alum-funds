@@ -181,6 +181,11 @@ input {
     justify-content: space-around;
 }
 
+.btn {
+    padding: 0.5vw 2vw;
+    line-height: 2vw;
+}
+
 #left-panel {
     overflow: auto;
     -webkit-overflow-scrolling: touch;
