@@ -107,7 +107,7 @@
 
                     <div class="form-group" style="display:table; width:100%">
                         <span style="display:table-row; width:100%"><font color="#b94646">*</font>What memory do you want to share?</span>
-                        <textarea id="story" name="story" rows="6" data-error="Required" required style="display:table-row; width:100%"></textarea>
+                        <textarea id="story" name="story" rows="6" data-error="Required" required style="display:table-row; width:100%; height:auto"></textarea>
                         <div class="help-block with-errors"></div>
                     </div>
 
@@ -119,8 +119,8 @@
 
                     <div class="form-group" style="display:table; width:100%">
                         <div class="form-inline" style="display:flex; horizontal-align:left">
-                            <span style="white-space:nowrap"><font color="#b94646">*</font>Expiration Date</span>
-                            <div class="form-group">
+                            <div class="form-group" style="display:table">
+                                <span style="white-space:nowrap"><font color="#b94646">*</font>Expiration Date</span>
                                 <select class="exp" id="exp_month" name="exp_month" data-stripe="exp_month" pattern="^((?!default).)*$" data-pattern-error="Required" required>
                                     <option value="default" disabled selected>MM</option>
                                     <option value="01">01</option>
@@ -137,8 +137,8 @@
                                     <option value="12">12</option>
                                 </select>
                                 <div class="help-block with-errors"></div>
+                                <span>/</span>
                             </div>
-                            <span>/</span>
                             <div class="form-group">
                                 <select class="exp" id="exp_year" name="exp_year" data-stripe="exp_year" pattern="^((?!default).)*$" data-pattern-error="Required" required>
                                     <option value="default" disabled selected>YY</option>

@@ -7,7 +7,8 @@ function updateLayout() {
 
     if (window.innerHeight / window.innerWidth < 1) {
         $("body").css("zoom", "1");
-        $("body").css("-webkit-text-size-adjust", "100%");
+        $("#left-panel").css("-webkit-text-size-adjust", "100%");
+        $("#right-panel").css("-webkit-text-size-adjust", "100%");
         $("body").css("-moz-text-size-adjust", "100%");
         $("body").css("-ms-text-size-adjust", "100%");
 
