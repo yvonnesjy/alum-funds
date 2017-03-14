@@ -190,6 +190,10 @@
     <script type="text/javascript" src="../scripts/responsive.js"></script>
     <script type="text/javascript" src="../scripts/getAndSendStripeToken.js"></script>
     <script type="text/javascript">
+        var s_height = document.getElementById('story').scrollHeight;
+        document.getElementById('story').setAttribute('style','height:'+s_height+'px');
+
+        
         {% if app.post is not empty %}
             $('#name').val('{{app.post.name}}');
             $('#email').val('{{app.post.email}}');
