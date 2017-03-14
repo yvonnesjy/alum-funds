@@ -107,7 +107,7 @@
 
                     <div class="form-group" style="display:table; width:100%">
                         <span style="display:table-row; width:100%"><font color="#b94646">*</font>What memory do you want to share?</span>
-                        <textarea id="story" name="story" rows="6" data-error="Required" required style="display:table-row; width:100%; height:auto"></textarea>
+                        <textarea id="story" name="story" rows="6" data-error="Required" required style="display:table-row; width:100%"></textarea>
                         <div class="help-block with-errors"></div>
                     </div>
 
@@ -153,13 +153,13 @@
                     </div>
 
                     <div class="form-group" style="display:table; width:100%">
-                        <div class="form-inline row">
-                            <div class="form-group col-sm-6" style="display: table">
+                        <div class="form-inline" style="display:flex; horizontal-align:left">
+                            <div class="form-group" style="display: table; width:50%">
                                 <span style="white-space:nowrap"><font color="#b94646">*</font>CVC</span>
                                 <input type="tel" id="cvc" name="cvc" size="4" maxlength="4" data-stripe="cvc" data-error="Invalid CVC" required style="width:100%">
                                 <div class="help-block with-errors"></div>
                             </div>
-                            <div class="form-group col-sm-6" style="display: table">
+                            <div class="form-group col-sm-6" style="display: table; width:50%">
                                 <span style="white-space:nowrap"><font color="#b94646">*</font>Billing Zip</span>
                                 <input type="tel" id="zip" name="zip" size="6" maxlength="6" data-stripe="address_zip" data-error="Invalid zip" required style="width:100%">
                                 <div class="help-block with-errors"></div>
