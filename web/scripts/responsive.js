@@ -31,7 +31,8 @@ function updateLayout() {
         closeBtn.setAttribute('class', 'hidden');
     } else {
         $("body").css("zoom", "2");
-        $("body").css("-webkit-text-size-adjust", "200%");
+        $("#left-panel").css("-webkit-text-size-adjust", "200%");
+        $("#right-panel").css("-webkit-text-size-adjust", "300%");
         $("body").css("-moz-text-size-adjust", "200%");
         $("body").css("-ms-text-size-adjust", "200%");
 
