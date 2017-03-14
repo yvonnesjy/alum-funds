@@ -37,22 +37,17 @@ $(function() {
         }
 
     }).on('submit', function(e) {
-        if (e.isDefaultPrevented()) {
-            return false;
-        } else {
+        if (!e.isDefaultPrevented()) {
             var $form = $('#form');
-            $form.submit(function(event) {
+            // Disable the submit button to prevent repeated clicks:
+            $form.find('.submit').prop('disabled', true);
 
-                // Disable the submit button to prevent repeated clicks:
-                $form.find('.submit').prop('disabled', true);
-
-                // Request a token from Stripe:
-                Stripe.card.createToken($form, stripeResponseHandler);
+            // Request a token from Stripe:
+            Stripe.card.createToken($form, stripeResponseHandler);
 
             // Prevent the form from being submitted:
-                return false;
-            });
         }
+        return false;
     });
 });
 

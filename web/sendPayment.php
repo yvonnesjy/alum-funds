@@ -62,6 +62,10 @@ if (isset($_POST)) {
         $_SESSION['err_msg'] = "An error occurred. Please try again.\n If this keeps happenning, email Yvonne(stonfish@hotmail.com).";
     }
 
+    if (isset($_SESSION['err_msg'])) {
+        $_SESSION['post'] = $_POST;
+    }
+
     redirect("index.php");
 }
 

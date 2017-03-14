@@ -96,7 +96,7 @@
 
                     <div class="form-group" style="display:table; width:100%">
                         <span style="white-space:nowrap"><font color="#b94646">*</font>Amount</span>
-                        <input type="number" id="amount" name="amount" min="0.50" max="999999.99" step="0.01" required data-min-error="Amount has to be at least $0.50" data-max-error="Amount has to be no larger than $999,999.99" data-error="Invalid number" style="width:100%">
+                        <input type="number" id="amount" name="amount" min="0.50" max="999999.99" step="0.01" required data-min-error="Amount has to be at least $0.50" data-max-error="Amount cannot be larger than $999,999.99" data-error="Invalid number" style="width:100%">
                         <div class="help-block with-errors"></div>
                     </div>
 
@@ -113,7 +113,7 @@
 
                     <div class="form-group" style="display:table; width:100%">
                         <span style="white-space:nowrap"><font color="#b94646">*</font>Card Number</span>
-                        <input type="tel" size="16" maxlength="16" data-error="Invalid card number" data-minlength="16" data-stripe="number" required style="width:100%">
+                        <input type="tel" id="card" name="card" size="16" maxlength="16" data-error="Invalid card number" data-minlength="16" data-stripe="number" required style="width:100%">
                         <div class="help-block with-errors"></div>
                     </div>
 
@@ -121,7 +121,7 @@
                         <div class="form-inline" style="display:flex; horizontal-align:left">
                             <span style="white-space:nowrap"><font color="#b94646">*</font>Expiration Date</span>
                             <div class="form-group">
-                                <select class="exp" data-stripe="exp_month" data-notEquals="default" data-error="Required" required>
+                                <select class="exp" id="exp_month" name="exp_month" data-stripe="exp_month" pattern="^((?!default).)*$" data-pattern-error="Required" required>
                                     <option value="default" disabled selected>MM</option>
                                     <option value="01">01</option>
                                     <option value="02">02</option>
@@ -140,7 +140,7 @@
                             </div>
                             <span>/</span>
                             <div class="form-group">
-                                <select class="exp" data-stripe="exp_year" data-notEquals="default" data-error="Required" required>
+                                <select class="exp" id="exp_year" name="exp_year" data-stripe="exp_year" pattern="^((?!default).)*$" data-pattern-error="Required" required>
                                     <option value="default" disabled selected>YY</option>
                                     {% set currentYear = "now"|date("Y") %}
                                     {% for year in currentYear..(currentYear + 20) %}
@@ -156,19 +156,19 @@
                         <div class="form-inline row">
                             <div class="form-group col-sm-6">
                                 <span style="white-space:nowrap"><font color="#b94646">*</font>CVC</span>
-                                <input type="tel" size="4" maxlength="4" data-stripe="cvc" data-error="Invalid CVC" required style="width:100%">
+                                <input type="tel" id="cvc" name="cvc" size="4" maxlength="4" data-stripe="cvc" data-error="Invalid CVC" required style="width:100%">
                                 <div class="help-block with-errors"></div>
                             </div>
                             <div class="form-group col-sm-6">
                                 <span style="white-space:nowrap"><font color="#b94646">*</font>Billing Zip</span>
-                                <input type="tel" size="6" maxlength="6" data-stripe="address_zip" data-error="Invalid zip" required style="width:100%">
+                                <input type="tel" id="zip" name="zip" size="6" maxlength="6" data-stripe="address_zip" data-error="Invalid zip" required style="width:100%">
                                 <div class="help-block with-errors"></div>
                             </div>
                         </div>
                     </div>
 
                     <div class="form-group form-inline anonymous-checkbox">
-                        <input type="checkbox" name="anonymous" value="anonymous">
+                        <input type="checkbox" id="anonymous" name="anonymous" value="anonymous">
                         <label class="anonymous-label">Post my story anonymously</label>
                     </div>
 
@@ -186,11 +186,26 @@
 
     <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script type="text/javascript" src="../css/bootstrap/css/bootstrap.min.css"></script>
     <script type="text/javascript" src="../scripts/validator.min.js"></script>
     <script type="text/javascript" src="../scripts/responsive.js"></script>
     <script type="text/javascript" src="../scripts/getAndSendStripeToken.js"></script>
     <script type="text/javascript">
+        {% if app.post is not empty %}
+            $('#name').val('{{app.post.name}}');
+            $('#email').val('{{app.post.email}}');
+            $('#amount').val('{{app.post.amount}}');
+            $('#purpose').val('{{app.post.purpose}}');
+            $('#story').val('{{app.post.story}}');
+            $('#card').val('{{app.post.card}}');
+            $('#exp_month').val('{{app.post.exp_month}}');
+            $('#exp_year').val('{{app.post.exp_year}}');
+            $('#cvc').val('{{app.post.cvc}}');
+            $('#zip').val('{{app.post.zip}}');
+            {% if app.post.anonymous is defined %}
+                $('#anonymous').prop('checked', true);
+            {% endif %}
+        {% endif %}
+
         if (isMobile()) {
             var err = document.getElementById('payment-errors');
             err.setAttribute("class", "hidden");

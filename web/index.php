@@ -83,13 +83,16 @@ $app['sisters'] = $sisters;
 $app['num_images'] = $num_images;
 $app['suc_msg'] = "";
 $app['err_msg'] = "";
+$app['post'] = array();
 if (isset($_SESSION['suc_msg'])) {
   $app['suc_msg'] = $_SESSION['suc_msg'];
   unset($_SESSION['suc_msg']);
 }
 if (isset($_SESSION['err_msg'])) {
   $app['err_msg'] = $_SESSION['err_msg'];
+  $app['post'] = $_SESSION['post'];
   unset($_SESSION['err_msg']);
+  unset($_SESSION['post']);
 }
 
 $app->run();
