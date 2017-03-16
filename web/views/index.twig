@@ -96,7 +96,7 @@
 
                     <div class="form-group" style="display:table; width:100%">
                         <span style="white-space:nowrap"><font color="#b94646">*</font>Amount</span>
-                        <input type="number" id="amount" name="amount" min="0.50" max="999999.99" step="0.01" pattern="[1-9][,\.0-9]*" required data-pattern-error="Invalid number" data-required-error="Required" data-min-error="Amount has to be at least $0.50" data-max-error="Amount cannot be larger than $999,999.99" style="width:100%">
+                        <input type="number" id="amount" name="amount" min="0.50" max="999999.99" step="0.01" required data-required-error="Required" data-min-error="Amount has to be at least $0.50" data-max-error="Amount cannot be larger than $999,999.99" data-step-error="" style="width:100%">
                         <div class="help-block with-errors"></div>
                     </div>
 
@@ -139,7 +139,7 @@
                                 <div class="help-block with-errors"></div>
                                 <span>/</span>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group" style="display:flex">
                                 <select class="exp" id="exp_year" name="exp_year" data-stripe="exp_year" pattern="^((?!default).)*$" data-pattern-error="Required" required>
                                     <option value="default" disabled selected>YY</option>
                                     {% set currentYear = "now"|date("Y") %}
@@ -159,7 +159,7 @@
                                 <input type="tel" id="cvc" name="cvc" size="4" maxlength="4" data-stripe="cvc" pattern="[0-9]+" data-required-error="Required" data-error="Invalid CVC" required style="width:100%">
                                 <div class="help-block with-errors"></div>
                             </div>
-                            <div class="form-group col-sm-6" style="display: table; width:50%">
+                            <div class="form-group" style="display: table; width:50%">
                                 <span style="white-space:nowrap"><font color="#b94646">*</font>Billing Zip</span>
                                 <input type="tel" id="zip" name="zip" size="6" maxlength="6" data-stripe="address_zip" pattern="[0-9]+" data-required-error="Required" data-error="Invalid zip" required style="width:100%">
                                 <div class="help-block with-errors"></div>
@@ -192,7 +192,6 @@
     <script type="text/javascript">
         var s_height = document.getElementById('story').scrollHeight;
         document.getElementById('story').setAttribute('style','height:'+s_height+'px');
-
         
         {% if app.post is not empty %}
             $('#name').val('{{app.post.name}}');

@@ -59,7 +59,8 @@ if (pg_num_rows($result)) {
 
 $query = "select sisters.class, first, sister, last, number
           from classes join sisters
-          on classes.name = sisters.class";
+          on classes.name = sisters.class
+          order by number";
 $result = pg_query($pg_conn, $query);
 $sisters = array();
 if (pg_num_rows($result)) {
