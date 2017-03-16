@@ -10,7 +10,7 @@ if (isset($_POST)) {
 
     $curl = new \Stripe\HttpClient\CurlClient(array(CURLOPT_SSLVERSION => CURL_SSLVERSION_TLSv1));
     \Stripe\ApiRequestor::setHttpClient($curl);
-    \Stripe\Stripe::setApiKey("sk_test_YRQsjn2dGpluxMPWQKBlKxPR");
+    \Stripe\Stripe::setApiKey("sk_live_hWSqktaYp7Lm7rpdjbOjCR6s");
 
     // Create a charge: this will charge the user's card
     try {
@@ -18,7 +18,7 @@ if (isset($_POST)) {
         "amount" => $_POST['amount'] * 100, // Amount in cents
         "currency" => "usd",
         "source" => $_POST['stripeToken'],
-        "description" => "Donation to Delta Phi Lambda",
+        "description" => "Donation",
         "receipt_email" => $_POST['email']
         ));
         

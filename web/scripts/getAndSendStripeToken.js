@@ -1,4 +1,4 @@
-Stripe.setPublishableKey('pk_test_DuyFhe6ZKiJbjFgdJ57dpOFd');
+Stripe.setPublishableKey('pk_live_KO8rnO1lnW7ebwXhEuVDNf6D');
 
 $(function() {
     $('#form').validator({
