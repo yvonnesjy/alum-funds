@@ -1,8 +1,6 @@
 <?php
 session_start();
 include 'utils.php';
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
 
 require_once('stripe/init.php');
 
@@ -70,16 +68,8 @@ if (isset($_POST)) {
 }
 
 function updateDB() {
-    $user = 'sbyqoykaxdtcbd';
-    $dbname = 'ddc85v730ush9e';
-    $pass = 'ca188649905b508b4bd725a75e646f2a3b9a49a72c745740bf6007e99c7f14bb';
-    $host = 'ec2-107-22-244-62.compute-1.amazonaws.com';
-    $port = '5432';
-    $path = 'postgres://sbyqoykaxdtcbd:ca188649905b508b4bd725a75e646f2a3b9a49a72c745740bf6007e99c7f14bb@ec2-107-22-244-62.compute-1.amazonaws.com:5432/ddc85v730ush9e';
-
-    // extract(parse_url(getenv('DATABASE_URL')));
-    $pg_conn = pg_connect("user=$user password=$pass host=$host port=$port dbname=$dbname");
-    // $pg_conn = pg_connect("user=$user password=$pass host=$host port=$port dbname=".ltrim($path, '/'));
+    extract(parse_url(getenv('DATABASE_URL')));
+    $pg_conn = pg_connect("user=$user password=$pass host=$host port=$port dbname=".ltrim($path, '/'));
 
     $query = "select * from donations";
     $result = pg_query($pg_conn, $query);
