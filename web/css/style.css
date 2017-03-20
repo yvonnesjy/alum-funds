@@ -193,6 +193,19 @@ input {
     padding: 0px;
 }
 
+.comment {
+    height: 100%;
+    width: 100%;
+    display: table;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+}
+
 #right-panel {
     overflow: auto;
     -webkit-overflow-scrolling: touch;
