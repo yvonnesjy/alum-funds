@@ -37,7 +37,9 @@
                         <div class={{'comment comment-'~story.id}} style="background-image: url({{ '../images/pic-' ~ story.id % app.num_images ~ '.jpg' }})">
                             <div class='content'>
                                 <div class='background'>
-                                    <div class='story-display'><p style='color: #897C7B;'>{{story.story}}</p><p style='color: #895753;'>-{{name}} {{story.date | date("m.d.Y")}}</p></div>
+                                    {% autoescape %}
+                                        <div class='story-display'><p style='color: #897C7B;'>{{story.story | replace({"\r\n": " <br \> ", "\r\n": " <br \> "}) | raw}}</p><p style='color: #895753;'>-{{name}} {{story.date | date("m.d.Y")}}</p></div>
+                                    {% endautoescape %}
                                 </div>
                             </div>
                         </div>
@@ -175,6 +177,13 @@
     <script type="text/javascript">
         var s_height = document.getElementById('story').scrollHeight;
         document.getElementById('story').setAttribute('style','height:'+s_height+'px');
+
+        var stories = document.getElementsByClassName("story-display");
+        for (var i = 0; i < stories.length; i++) {
+            var text = stories[i].innerHTML;
+            text = text.replace(/((http|https|ftp|ftps)\:\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(\/\S*)?)/g, '<a href="$1">$1</a>');
+            stories[i].innerHTML = text;
+        }
         
         {% if app.post is not empty %}
             $('#name').val('{{app.post.name}}');
